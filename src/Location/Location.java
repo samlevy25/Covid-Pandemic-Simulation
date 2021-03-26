@@ -23,4 +23,8 @@ public class Location {
     public boolean equals(Location other_l){
         return this.position == other_l.getPosition() && this.size == other_l.getSize();
     }
+    public Location(Point p, Size s) {
+        position = p;
+        size = s;
+    }
 }

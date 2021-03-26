@@ -8,12 +8,15 @@ public abstract class Person {
     private int age;
     private Point location;
     private Settlement settlement;
+    public int getAge() {
+        return this.age;
+    }
     Person(int a, Point p, Settlement s) {
         this.age = a;
         location = p;
         settlement = s;
     }
-    private double contagionProbability() {
+    public double contagionProbability() {
         return 1;
     }
     public Person contagion(IVirus virus) {
