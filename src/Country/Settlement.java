@@ -13,13 +13,13 @@ public class Settlement {
     private Location location;
     private List<Person> people;
     private RamzorColor ramzorColor;
-    int mekadem;
-    Settlement(String n, Location l, List<Person> p, int m) {
+    protected double mekadem;
+    Settlement(String n, Location l, List<Person> p) {
         name = n;
         location = l;
         people = p;
-        mekadem = m;
         ramzorColor = calculateRamzorGrade();
+        mekadem = 1;
     }
     public RamzorColor calculateRamzorGrade() {
         if ( mekadem < 0.4)
@@ -58,4 +58,19 @@ public class Settlement {
         newPlace.addPerson(person);
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Settlement{" +
+                "name='" + name + '\'' +
+                ", location=" + location +
+                ", people=" + people +
+                ", ramzorColor=" + ramzorColor +
+                ", mekadem=" + mekadem +
+                '}';
+    }
+    public boolean equals(Settlement other) {
+        return this.name.equals(other.name);
+    }
+
 }
