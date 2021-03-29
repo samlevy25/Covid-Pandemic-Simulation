@@ -1,9 +1,10 @@
 package Virus;
 
 import Population.Person;
+import Population.Sick;
 
 public interface IVirus {
-    public double contagionProbability(Person p);
-    public boolean tryToContagion(Person p, Person other);
-    public boolean tryToKill(Person p);
+    double contagionProbability(Person p);
+    boolean tryToContagion(Person p, Person other);
+    boolean tryToKill(Sick p);
 }

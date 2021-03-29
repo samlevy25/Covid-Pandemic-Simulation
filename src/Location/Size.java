@@ -9,7 +9,7 @@ public class Size {
     public int getHeight(){
         return height;
     }
-    Size(int w, int h){
+    public Size(int w, int h){
         width = w;
         height = h;
     }

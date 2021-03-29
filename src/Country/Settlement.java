@@ -13,7 +13,7 @@ public class Settlement {
     private Location location;
     private List<Person> people;
     private RamzorColor ramzorColor;
-    protected double mekadem;
+    private double mekadem;
     Settlement(String n, Location l, List<Person> p) {
         name = n;
         location = l;
@@ -40,14 +40,13 @@ public class Settlement {
         }
         return count/people.size();
     }
-    public Location randomLocation() {
+    public Point randomLocation() {
         Random rand = new Random();
         int range_x = location.getPosition().getM_x() + location.getSize().getWidth();
         int range_y = location.getPosition().getM_y() + location.getSize().getHeight();
         int x = (int)(Math.random()*range_x)+location.getPosition().getM_x();
         int y = (int)(Math.random()*range_y)+location.getPosition().getM_y();
-        Point p = new Point(x, y);
-        return new Location(p, location.getSize());
+        return new Point(x, y);
     }
     public boolean addPerson(Person newPerson) {
         people.add(newPerson);
@@ -73,4 +72,11 @@ public class Settlement {
         return this.name.equals(other.name);
     }
 
+    public double getMekadem() {
+        return mekadem;
+    }
+
+    protected void setMekadem(double mekadem) {
+        this.mekadem = mekadem;
+    }
 }

@@ -2,6 +2,7 @@ package Population;
 
 import Country.Settlement;
 import Location.Point;
+import Simulation.Clock;
 import Virus.IVirus;
 
 public abstract class Person {
@@ -10,6 +11,12 @@ public abstract class Person {
     private Settlement settlement;
     public int getAge() {
         return this.age;
+    }
+    public Point getLocation() {
+        return this.location;
+    }
+    public Settlement getSettlement() {
+        return this.settlement;
     }
     Person(int a, Point p, Settlement s) {
         this.age = a;
@@ -20,6 +27,15 @@ public abstract class Person {
         return 1;
     }
     public Person contagion(IVirus virus) {
-        return new Sick(this.age, this.location, this.settlement, virus);
+        return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "age=" + age +
+                ", location=" + location +
+                ", settlement=" + settlement +
+                '}';
     }
 }
