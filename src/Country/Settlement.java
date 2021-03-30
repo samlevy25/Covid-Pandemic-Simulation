@@ -82,4 +82,8 @@ public class Settlement {
     public void setRamzorColor(RamzorColor ramzorColor) {
         this.ramzorColor = ramzorColor;
     }
+
+    public List<Person> getPeople() {
+        return people;
+    }
 }

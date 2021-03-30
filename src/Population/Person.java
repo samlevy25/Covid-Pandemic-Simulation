@@ -18,7 +18,7 @@ public abstract class Person {
     public Settlement getSettlement() {
         return this.settlement;
     }
-    Person(int a, Point p, Settlement s) {
+    public Person(int a, Point p, Settlement s) {
         this.age = a;
         location = p;
         settlement = s;
@@ -26,7 +26,7 @@ public abstract class Person {
     public double contagionProbability() {
         return 1;
     }
-    public Person contagion(IVirus virus) {
+    public Sick contagion(IVirus virus) {
         return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
     }
 
