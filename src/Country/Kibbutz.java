@@ -8,7 +8,6 @@ import java.util.List;
 public class Kibbutz extends Settlement {
     public Kibbutz(String n, Location l, List<Person> p) {
         super(n, l , p);
-        this.calculateRamzorGrade();
     }
 
     @Override

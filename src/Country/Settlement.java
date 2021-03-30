@@ -18,8 +18,8 @@ public class Settlement {
         name = n;
         location = l;
         people = p;
-        ramzorColor = calculateRamzorGrade();
         mekadem = 1;
+        ramzorColor = RamzorColor.Green;
     }
     public RamzorColor calculateRamzorGrade() {
         if ( mekadem < 0.4)
@@ -61,9 +61,8 @@ public class Settlement {
     @Override
     public String toString() {
         return "Settlement{" +
-                "name='" + name + '\'' +
-                ", location=" + location +
-                ", people=" + people +
+                "name='" + name + "', " +
+                 location +
                 ", ramzorColor=" + ramzorColor +
                 ", mekadem=" + mekadem +
                 '}';
@@ -78,5 +77,9 @@ public class Settlement {
 
     protected void setMekadem(double mekadem) {
         this.mekadem = mekadem;
+    }
+
+    public void setRamzorColor(RamzorColor ramzorColor) {
+        this.ramzorColor = ramzorColor;
     }
 }

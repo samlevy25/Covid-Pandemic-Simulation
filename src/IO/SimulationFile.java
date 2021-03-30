@@ -14,9 +14,8 @@ public class SimulationFile {
     public SimulationFile(String n) {
         nameOfFile = n;
     }
-    public List<Settlement> readFromFile() {
+    public List<Settlement> readFromFile() throws FileNotFoundException {
         List<Settlement> settlementsList = new ArrayList<>();
-        try{
         File myFile = new File(nameOfFile);
         Scanner myReader = new Scanner(myFile);
         while(myReader.hasNextLine()) {
@@ -38,6 +37,7 @@ public class SimulationFile {
                         Healthy person = new Healthy(age, myCity.randomLocation(), myCity);
                         myCity.addPerson(person);
                     }
+                    myCity.setRamzorColor(myCity.calculateRamzorGrade());
                     settlementsList.add(myCity);
                     break;
                 case "Kibbutz":
@@ -50,6 +50,7 @@ public class SimulationFile {
                         Healthy person = new Healthy(age, myKibbutz.randomLocation(), myKibbutz);
                         myKibbutz.addPerson(person);
                     }
+                    myKibbutz.setRamzorColor(myKibbutz.calculateRamzorGrade());
                     settlementsList.add(myKibbutz);
                     break;
                 case "Moshav":
@@ -62,13 +63,10 @@ public class SimulationFile {
                         Healthy person = new Healthy(age, myMoshav.randomLocation(), myMoshav);
                         myMoshav.addPerson(person);
                     }
+                    myMoshav.setRamzorColor(myMoshav.calculateRamzorGrade());
                     settlementsList.add(myMoshav);
                     break;
             }
-        }
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
         return settlementsList;
     }

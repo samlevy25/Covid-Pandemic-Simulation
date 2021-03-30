@@ -6,9 +6,9 @@ import Simulation.Clock;
 import Virus.IVirus;
 
 public abstract class Person {
-    private int age;
-    private Point location;
-    private Settlement settlement;
+    private final int age;
+    private final Point location;
+    private final Settlement settlement;
     public int getAge() {
         return this.age;
     }

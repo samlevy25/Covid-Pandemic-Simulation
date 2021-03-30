@@ -8,7 +8,6 @@ import java.util.List;
 public class City extends Settlement {
     public City(String n, Location l, List<Person> p) {
         super(n, l, p);
-        calculateRamzorGrade();
     }
 
     @Override

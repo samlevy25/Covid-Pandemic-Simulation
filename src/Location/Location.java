@@ -1,8 +1,8 @@
 package Location;
 
 public class Location {
-    private Point position;
-    private Size size;
+    private final Point position;
+    private final Size size;
 
     public Point getPosition() {
         return position;
@@ -15,8 +15,8 @@ public class Location {
     @Override
     public String toString() {
         return "Location{" +
-                "position=" + position.toString() +
-                ", size=" + size.toString() +
+                 position.toString() + ", " +
+                 size.toString() +
                 '}';
     }
 
