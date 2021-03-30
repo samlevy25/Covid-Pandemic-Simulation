@@ -16,7 +16,7 @@ public class BritishVariant implements IVirus {
 
     @Override
     public double contagionProbability(Person p) {
-        return 0.7;
+        return 0.7*p.contagionProbability();
     }
 
     @Override

@@ -17,9 +17,9 @@ public class SouthAfricanVariant implements IVirus {
     @Override
     public double contagionProbability(Person p) {
         if (p.getAge() <= 18)
-            return 0.6;
+            return 0.6*p.contagionProbability();
         else
-            return 0.5;
+            return 0.5*p.contagionProbability();
     }
 
     @Override
