@@ -21,11 +21,13 @@ public class BritishVariant implements IVirus {
 
     @Override
     public boolean tryToContagion(Person p, Person other) {
-        if(p instanceof Sick)
+        if(!(other instanceof Sick))
         {
             double distance = Math.sqrt(Math.pow(p.getLocation().getM_x() - other.getLocation().getM_x(), 2) + Math.pow(p.getLocation().getM_y()-other.getLocation().getM_y(), 2));
             double probability = contagionProbability(other)*Math.min(1, 0.14+Math.exp(2-0.25*distance));
             int i = new Random().nextInt(100);
+            if (i < probability * 100)
+                other = other.contagion(this);
             return i < probability * 100;
         }
         else return false;
