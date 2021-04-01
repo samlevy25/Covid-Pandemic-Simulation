@@ -26,7 +26,7 @@ public abstract class Person {
     public double contagionProbability() {
         return 1;
     }
-    public Sick contagion(IVirus virus) {
+    public Person contagion(IVirus virus) {
         return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
     }
 

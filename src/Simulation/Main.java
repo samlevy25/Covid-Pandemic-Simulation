@@ -45,7 +45,7 @@ public class Main {
         for (Settlement settlement : s) {
             int onePercent = (int) (settlement.getPeople().size() / 0.01);
             for (int j = 0; j < onePercent; j++) {
-                Sick newSick = settlement.getPeople().remove(j).contagion(virus);
+                Sick newSick = (Sick) settlement.getPeople().remove(j).contagion(virus);
                 settlement.getPeople().add(newSick);
             }
         }
