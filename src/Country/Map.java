@@ -11,6 +11,10 @@ public class Map {
         }
     }
 
+    public Settlement[] getSettlements() {
+        return settlements;
+    }
+
     @Override
     public String toString() {
         return "Map{" +

@@ -11,6 +11,7 @@ import Virus.IVirus;
 import Virus.SouthAfricanVariant;
 
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -41,12 +42,26 @@ public class Main {
                 break;
             default:
                 virus = null;
-        }}while(virus == null);
-        for (Settlement settlement : s) {
-            int onePercent = (int) (settlement.getPeople().size() / 0.01);
+            }
+        }while(virus == null);
+        for(int i = 0; i < myMap.getSettlements().length; i++){
+            int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() / 0.01);
             for (int j = 0; j < onePercent; j++) {
-                Sick newSick = (Sick) settlement.getPeople().remove(j).contagion(virus);
-                settlement.getPeople().add(newSick);
+                Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(j).contagion(virus);
+                myMap.getSettlements()[i].getPeople().add(newSick);
+            }
+        }
+        // Step 3: Simulation
+        for (int count = 0; count < 5; count++) { // Simulate 5 time
+            for (int i = 0; i < myMap.getSettlements().length; i++) {
+                for (int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
+                    if (myMap.getSettlements()[i].getPeople().get(j) instanceof Sick) {
+                        for (int k = 0; k < 6; k++) { // Pick 6 random people and try to contagion them
+                            int rand = new Random().nextInt(myMap.getSettlements()[i].getPeople().size());
+                            virus.tryToContagion(myMap.getSettlements()[i].getPeople().get(j), myMap.getSettlements()[i].getPeople().get(rand));
+                        }
+                    }
+                }
             }
         }
     }
