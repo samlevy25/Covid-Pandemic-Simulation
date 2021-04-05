@@ -8,6 +8,12 @@ public class Healthy extends Person {
     public Healthy(int a, Point p, Settlement s) {
         super(a, p, s);
     }
+
+    @Override
+    public double contagionProbability() {
+        return 1;
+    }
+
     public Person vaccinate() {
         return new Vaccinated(this.getAge(), this.getLocation(), this.getSettlement(), Clock.now());
     }

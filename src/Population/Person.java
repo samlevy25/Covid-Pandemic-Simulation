@@ -23,11 +23,19 @@ public abstract class Person {
         location = p;
         settlement = s;
     }
-    public double contagionProbability() {
-        return 1;
-    }
+    public abstract double contagionProbability();
+
     public Person contagion(IVirus virus) {
-        return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
+        try{
+            if(!(this instanceof Sick)){
+                return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
+            }
+            else
+                throw new Exception("This person is already sick.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return this;
     }
 
     @Override

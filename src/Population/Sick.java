@@ -28,6 +28,11 @@ public class Sick extends Person {
     }
 
     @Override
+    public double contagionProbability() {
+        return 0;
+    }
+
+    @Override
     public String toString() {
         return "Sick{" +
                 "contagiousTime=" + contagiousTime +

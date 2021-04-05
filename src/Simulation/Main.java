@@ -3,7 +3,6 @@ package Simulation;
 import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
-import Population.Person;
 import Population.Sick;
 import Virus.BritishVariant;
 import Virus.ChineseVariant;
@@ -45,7 +44,7 @@ public class Main {
             }
         }while(virus == null);
         for(int i = 0; i < myMap.getSettlements().length; i++){
-            int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() / 0.01);
+            int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.01);
             for (int j = 0; j < onePercent; j++) {
                 Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(j).contagion(virus);
                 myMap.getSettlements()[i].getPeople().add(newSick);
