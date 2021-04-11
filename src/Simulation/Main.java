@@ -4,45 +4,48 @@ import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
 import Population.Sick;
-import Virus.BritishVariant;
-import Virus.ChineseVariant;
-import Virus.IVirus;
-import Virus.SouthAfricanVariant;
-
+import Virus.*;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+
+    private static Map stepOne() {
         Scanner input = new Scanner(System.in);
-        // Step 1: Map loading
         System.out.println("Hello, please enter your simulation file's name: ");
         String nameOfFile = input.nextLine();
         SimulationFile myFile = new SimulationFile(nameOfFile);
         Settlement[] s = myFile.readFromFile().toArray(new Settlement[0]);
-        Map myMap = new Map(s, s.length);
-        for (Settlement settlement : s) System.out.println(settlement);
-        // Step 2: 1% Sick
-        System.out.println("Choose a variant virus to start simulation: \n1.Chineese Variant  2.British Variant  3.South-Africa Variant");
+        return new Map(s, s.length);
+    }
+
+    private static IVirus choosingVirus() {
+        System.out.println("Choose a variant virus to start simulation: \n1.Chinese Variant  2.British Variant  3.South-Africa Variant");
         int variant;
         IVirus virus;
+        Scanner input = new Scanner(System.in);
         do{
-        variant = input.nextInt();
-        switch (variant) {
-            case 1:
-                virus = new ChineseVariant();
-                break;
-            case 2:
-                virus = new BritishVariant();
-                break;
-            case 3:
-                virus = new SouthAfricanVariant();
-                break;
-            default:
-                virus = null;
+            variant = input.nextInt();
+            switch (variant) {
+                case 1:
+                    virus = new ChineseVariant();
+                    break;
+                case 2:
+                    virus = new BritishVariant();
+                    break;
+                case 3:
+                    virus = new SouthAfricanVariant();
+                    break;
+                default:
+                    virus = null;
             }
         }while(virus == null);
+        return virus;
+    }
+
+    private static void stepTwo(Map myMap, IVirus virus) {
+
         for(int i = 0; i < myMap.getSettlements().length; i++){
             int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.01);
             for (int j = 0; j < onePercent; j++) {
@@ -50,7 +53,9 @@ public class Main {
                 myMap.getSettlements()[i].getPeople().add(newSick);
             }
         }
-        // Step 3: Simulation
+    }
+
+    private static void stepThree(Map myMap, IVirus virus) {
         for (int count = 0; count < 5; count++) { // Simulate 5 time
             for (int i = 0; i < myMap.getSettlements().length; i++) {
                 for (int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
@@ -63,5 +68,16 @@ public class Main {
                 }
             }
         }
+    }
+
+
+    public static void main(String[] args) {
+        // Step 1: Map loading
+        Map myMap = stepOne();
+        // Step 2: 1% Sick
+        IVirus virus = choosingVirus();
+        stepTwo(myMap, virus);
+        // Step 3: Simulation
+        stepThree(myMap, virus);
     }
 }
