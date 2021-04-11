@@ -5,7 +5,6 @@ import Country.Settlement;
 import IO.SimulationFile;
 import Population.Sick;
 import Virus.*;
-import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
 
