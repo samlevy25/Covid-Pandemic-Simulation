@@ -6,11 +6,10 @@ import Population.Person;
 import Population.Sick;
 
 import java.util.List;
-import java.util.Random;
 
 public class Settlement {
-    private String name;
-    private Location location;
+    private final String name;
+    private final Location location;
     private List<Person> people;
     private RamzorColor ramzorColor;
     private double mekadem;
@@ -22,14 +21,22 @@ public class Settlement {
         ramzorColor = RamzorColor.Green;
     }
     public RamzorColor calculateRamzorGrade() {
-        if ( mekadem < 0.4)
+        if ( mekadem < 0.4) {
+            ramzorColor = RamzorColor.Green;
             return RamzorColor.Green;
-        else if(mekadem < 0.6)
+        }
+        else if(mekadem < 0.6) {
+            ramzorColor = RamzorColor.Yellow;
             return RamzorColor.Yellow;
-        else if(mekadem < 0.8)
+        }
+        else if(mekadem < 0.8) {
+            ramzorColor = RamzorColor.Orange;
             return RamzorColor.Orange;
-        else
+        }
+        else {
+            ramzorColor = RamzorColor.Red;
             return RamzorColor.Red;
+        }
     }
     public double contagiousPercent() {
         double count = 0;
@@ -41,7 +48,6 @@ public class Settlement {
         return count/people.size();
     }
     public Point randomLocation() {
-        Random rand = new Random();
         int range_x = location.getPosition().getM_x() + location.getSize().getWidth();
         int range_y = location.getPosition().getM_y() + location.getSize().getHeight();
         int x = (int)(Math.random()*range_x)+location.getPosition().getM_x();
@@ -77,10 +83,6 @@ public class Settlement {
 
     protected void setMekadem(double mekadem) {
         this.mekadem = mekadem;
-    }
-
-    public void setRamzorColor(RamzorColor ramzorColor) {
-        this.ramzorColor = ramzorColor;
     }
 
     public List<Person> getPeople() {

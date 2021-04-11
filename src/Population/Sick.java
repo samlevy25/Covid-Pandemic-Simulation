@@ -5,8 +5,6 @@ import Location.Point;
 import Simulation.Clock;
 import Virus.IVirus;
 
-import java.util.Random;
-
 public class Sick extends Person {
     private final long contagiousTime;
     private final IVirus virus;

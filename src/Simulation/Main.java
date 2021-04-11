@@ -20,11 +20,11 @@ public class Main {
     }
 
     private static IVirus choosingVirus() {
-        System.out.println("Choose a variant virus to start simulation: \n1.Chinese Variant  2.British Variant  3.South-Africa Variant");
         int variant;
         IVirus virus;
         Scanner input = new Scanner(System.in);
         do{
+            System.out.println("Choose a variant virus to start simulation: \n1.Chinese Variant  2.British Variant  3.South-Africa Variant");
             variant = input.nextInt();
             switch (variant) {
                 case 1:
@@ -61,7 +61,10 @@ public class Main {
                     if (myMap.getSettlements()[i].getPeople().get(j) instanceof Sick) {
                         for (int k = 0; k < 6; k++) { // Pick 6 random people and try to contagion them
                             int rand = new Random().nextInt(myMap.getSettlements()[i].getPeople().size());
-                            virus.tryToContagion(myMap.getSettlements()[i].getPeople().get(j), myMap.getSettlements()[i].getPeople().get(rand));
+                            if(virus.tryToContagion(myMap.getSettlements()[i].getPeople().get(j), myMap.getSettlements()[i].getPeople().get(rand))){
+                                Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(rand).contagion(virus);
+                                myMap.getSettlements()[i].getPeople().add(newSick);
+                            }
                         }
                     }
                 }
@@ -76,7 +79,28 @@ public class Main {
         // Step 2: 1% Sick
         IVirus virus = choosingVirus();
         stepTwo(myMap, virus);
+        /////////////////////////////////////////////////////
+        int numberOfSicks;
+        for(int i = 0; i < 3; i++){
+            numberOfSicks = 0;
+            for(int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
+                if(myMap.getSettlements()[i].getPeople().get(j) instanceof Sick)
+                    numberOfSicks++;
+            }
+            System.out.println("StepTwo: " + numberOfSicks);
+        }
+        ////////////////////////////////////////////////////
         // Step 3: Simulation
         stepThree(myMap, virus);
+        ////////////////////////////////////////////////////
+        for(int i = 0; i < 3; i++){
+            numberOfSicks = 0;
+            for(int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
+                if(myMap.getSettlements()[i].getPeople().get(j) instanceof Sick)
+                    numberOfSicks++;
+            }
+            System.out.println("StepThree: " + numberOfSicks);
+        }
+        ////////////////////////////////////////////////////
     }
 }
