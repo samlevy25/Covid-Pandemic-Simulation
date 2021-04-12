@@ -38,7 +38,6 @@ public class SimulationFile {
                             Healthy person = new Healthy(age, myCity.randomLocation(), myCity);
                             myCity.addPerson(person);
                         }
-                        myCity.calculateRamzorGrade();
                         settlementsList.add(myCity);
                         break;
                     case "Kibbutz":
@@ -51,7 +50,6 @@ public class SimulationFile {
                             Healthy person = new Healthy(age, myKibbutz.randomLocation(), myKibbutz);
                             myKibbutz.addPerson(person);
                         }
-                        myKibbutz.calculateRamzorGrade();
                         settlementsList.add(myKibbutz);
                         break;
                     case "Moshav":
@@ -64,7 +62,6 @@ public class SimulationFile {
                             Healthy person = new Healthy(age, myMoshav.randomLocation(), myMoshav);
                             myMoshav.addPerson(person);
                         }
-                        myMoshav.calculateRamzorGrade();
                         settlementsList.add(myMoshav);
                         break;
                 }
