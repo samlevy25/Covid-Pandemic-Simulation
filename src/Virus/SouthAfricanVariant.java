@@ -3,23 +3,28 @@ package Virus;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
-
 import java.util.Random;
 
 public class SouthAfricanVariant implements IVirus {
+
+    private static final double killUnder18 = 0.05;
+    private static final double killAbove18 = 0.08;
+    private static final double contagionUnder18 = 0.6;
+    private static final double contagionAbove18 = 0.5;
+
     public double killingProbability(Person p) {
         if (p.getAge() <= 18)
-            return 0.05;
+            return killUnder18;
         else
-            return 0.08;
+            return killAbove18;
     }
 
     @Override
     public double contagionProbability(Person p) {
         if (p.getAge() <= 18)
-            return 0.6*p.contagionProbability();
+            return contagionUnder18*p.contagionProbability();
         else
-            return 0.5*p.contagionProbability();
+            return contagionAbove18*p.contagionProbability();
     }
 
     @Override
@@ -36,9 +41,15 @@ public class SouthAfricanVariant implements IVirus {
 
     @Override
     public boolean tryToKill(Sick p) {
+
         long t = Clock.now() - p.getContagiousTime();
         double probability = Math.max(0, killingProbability(p) - 0.01*killingProbability(p)*Math.pow(t-15, 2));
         int i = new Random().nextInt(100);
         return i < probability * 100;
+    }
+
+    @Override
+    public String toString() {
+        return "South-Africa Variant";
     }
 }

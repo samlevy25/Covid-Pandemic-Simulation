@@ -17,4 +17,9 @@ public class Healthy extends Person {
     public Person vaccinate() {
         return new Vaccinated(this.getAge(), this.getLocation(), this.getSettlement(), Clock.now());
     }
+
+    @Override
+    public String toString() {
+        return "Healthy{" + super.toString();
+    }
 }

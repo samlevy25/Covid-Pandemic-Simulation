@@ -102,5 +102,6 @@ public class Main {
             System.out.println("StepThree: " + numberOfSicks);
         }
         ////////////////////////////////////////////////////
+        System.out.println(myMap);
     }
 }

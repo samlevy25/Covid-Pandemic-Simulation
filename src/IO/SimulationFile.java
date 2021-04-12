@@ -4,7 +4,6 @@ import Country.*;
 import Location.*;
 import Population.Healthy;
 import Population.Person;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -71,5 +70,10 @@ public class SimulationFile {
             System.exit(-1);
         }
         return settlementsList;
+    }
+
+    @Override
+    public String toString() {
+        return "SimulationFile{" + nameOfFile + '}';
     }
 }

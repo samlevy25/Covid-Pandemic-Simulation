@@ -16,7 +16,7 @@ public class Point {
 
     @Override
     public String toString() {
-        return "Point(" + m_x +
+        return "(" + m_x +
                 ", " + m_y +
                 ')';
     }

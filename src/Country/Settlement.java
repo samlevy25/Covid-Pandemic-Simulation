@@ -4,10 +4,9 @@ import Location.Location;
 import Location.Point;
 import Population.Person;
 import Population.Sick;
-
 import java.util.List;
 
-public class Settlement {
+public abstract class Settlement {
     private final String name;
     private final Location location;
     private List<Person> people;
@@ -77,6 +76,10 @@ public class Settlement {
         return this.name.equals(other.name);
     }
 
+    public String getName() {
+        return name;
+    }
+
     public double getMekadem() {
         return mekadem;
     }
@@ -87,5 +90,9 @@ public class Settlement {
 
     public List<Person> getPeople() {
         return people;
+    }
+
+    public RamzorColor getRamzorColor() {
+        return calculateRamzorGrade();
     }
 }

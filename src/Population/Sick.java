@@ -35,6 +35,6 @@ public class Sick extends Person {
         return "Sick{" +
                 "contagiousTime=" + contagiousTime +
                 ", virus=" + virus +
-                '}' + super.toString();
+                 super.toString();
     }
 }

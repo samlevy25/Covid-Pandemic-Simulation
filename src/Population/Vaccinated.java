@@ -19,7 +19,7 @@ public class Vaccinated extends Person {
     public String toString() {
         return "Vaccinated{" +
                 "vaccinationTime=" + vaccinationTime +
-                '}' + super.toString();
+                 super.toString();
     }
 
     @Override

@@ -2,7 +2,6 @@ package Country;
 
 import Location.Location;
 import Population.Person;
-
 import java.util.List;
 
 public class Kibbutz extends Settlement {
@@ -18,6 +17,6 @@ public class Kibbutz extends Settlement {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Kibbutz{'" + getName() + "', " + getPeople().size() + ", " +  getRamzorColor() + "}";
     }
 }

@@ -14,10 +14,10 @@ public class Location {
 
     @Override
     public String toString() {
-        return "Location{" +
-                 position.toString() + ", " +
+        return "[" +
+                 position.toString() + "; " +
                  size.toString() +
-                '}';
+                ']';
     }
 
     public boolean equals(Location other_l){

@@ -3,27 +3,34 @@ package Virus;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
-
 import java.util.Random;
 
 public class ChineseVariant implements IVirus {
+
+    private static final double killUnder18 = 0.001;
+    private static final double killUnder55 = 0.05;
+    private static final double killAbove55 = 0.1;
+    private static final double contagionUnder18 = 0.2;
+    private static final double contagionUnder55 = 0.5;
+    private static final double contagionAbove55 = 0.7;
+
     public double killingProbability(Person p) {
         if (p.getAge() <= 18)
-            return 0.001;
+            return killUnder18;
         else if (p.getAge() <= 55)
-            return 0.05;
+            return killUnder55;
         else
-            return 0.1;
+            return killAbove55;
     }
 
     @Override
     public double contagionProbability(Person p) {
         if (p.getAge() <= 18)
-            return 0.2*p.contagionProbability();
+            return contagionUnder18*p.contagionProbability();
         if (p.getAge() <= 55)
-            return 0.5*p.contagionProbability();
+            return contagionUnder55*p.contagionProbability();
         else
-            return 0.7*p.contagionProbability();
+            return contagionAbove55*p.contagionProbability();
     }
 
     @Override
@@ -44,5 +51,10 @@ public class ChineseVariant implements IVirus {
         double probability = Math.max(0, killingProbability(p) - 0.01*killingProbability(p)*Math.pow(t-15, 2));
         int i = new Random().nextInt(100);
         return i < probability * 100;
+    }
+
+    @Override
+    public String toString() {
+        return "Chinese Variant";
     }
 }

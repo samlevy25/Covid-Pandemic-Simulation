@@ -19,7 +19,7 @@ public class Convalescent extends Person {
     @Override
     public String toString() {
         return "Convalescent{" +
-                "virus=" + virus +
-                '}' + super.toString();
+                "virus=" + virus.toString() +
+                ", " + super.toString();
     }
 }

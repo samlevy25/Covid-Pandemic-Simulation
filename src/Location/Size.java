@@ -16,10 +16,9 @@ public class Size {
 
     @Override
     public String toString() {
-        return "Size{" +
-                "width=" + width +
-                ", height=" + height +
-                '}';
+        return "(" + width +
+                "x" + height +
+                ')';
     }
     public boolean equals(Size other_s){
         return this.width == other_s.getWidth() && this.height == other_s.getHeight();

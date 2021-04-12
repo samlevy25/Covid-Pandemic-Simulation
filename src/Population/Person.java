@@ -40,8 +40,7 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "age=" + age +
+        return  "age=" + age +
                 ", location=" + location +
                 ", settlement=" + settlement +
                 '}';

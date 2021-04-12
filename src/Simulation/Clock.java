@@ -1,13 +1,16 @@
 package Simulation;
 
 public class Clock {
+    private static long now;
+
     public static long now() {
+        nextTick();
         return now;
     }
     public static void nextTick() {
         now++;
     }
-    private static long now;
+
     public Clock(long n) {
         now = n;
     }

@@ -3,7 +3,7 @@ package Country;
 import java.util.Arrays;
 
 public class Map {
-    private Settlement[] settlements;
+    private final Settlement[] settlements;
     public Map(Settlement[] s, int n) {
         settlements = new Settlement[n];
         for (int i = 0; i < n; i++) {
@@ -17,8 +17,7 @@ public class Map {
 
     @Override
     public String toString() {
-        return "Map{" +
-                "settlements=" + Arrays.toString(settlements) +
+        return "Map{" + Arrays.toString(settlements) +
                 '}';
     }
 }
