@@ -17,6 +17,6 @@ public class Moshav extends Settlement {
 
     @Override
     public String toString() {
-        return "Moshav{'" + getName() + "', " + getPeople().size() + ", " +  getRamzorColor() + "}";
+        return "Moshav '" + getName() + "': population:" + getPeople().size() + ", sicks: " + numOfSicks() + ", RamzorColor: " +  getRamzorColor() + "\n";
     }
 }

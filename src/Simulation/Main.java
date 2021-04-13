@@ -5,12 +5,14 @@ import Country.Settlement;
 import IO.SimulationFile;
 import Population.Sick;
 import Virus.*;
+
+import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
 
-    private static Map stepOne() {
+    private static Map stepOne() throws IOException {
         Scanner input = new Scanner(System.in);
         System.out.println("Hello, please enter your simulation file's name: ");
         String nameOfFile = input.nextLine();
@@ -73,9 +75,10 @@ public class Main {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Step 1: Map loading
         Map myMap = stepOne();
+
         // Step 2: 1% Sick
         IVirus virus = choosingVirus();
         stepTwo(myMap, virus);

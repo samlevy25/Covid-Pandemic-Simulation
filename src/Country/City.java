@@ -18,6 +18,6 @@ public class City extends Settlement {
 
     @Override
     public String toString() {
-        return "City{'" + getName() + "', " + getPeople().size() + ", " +  getRamzorColor() + "}";
+        return "City '" + getName() + "': population:" + getPeople().size() + ", sicks: " + numOfSicks() + ", RamzorColor: " +  getRamzorColor() + "\n";
     }
 }

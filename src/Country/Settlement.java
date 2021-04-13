@@ -92,6 +92,15 @@ public abstract class Settlement {
         return people;
     }
 
+    public int numOfSicks() {
+        int count = 0;
+        for(int i = 0; i < getPeople().size(); i++) {
+            if(getPeople().get(i) instanceof Sick)
+                count++;
+        }
+        return count;
+    }
+
     public RamzorColor getRamzorColor() {
         return calculateRamzorGrade();
     }

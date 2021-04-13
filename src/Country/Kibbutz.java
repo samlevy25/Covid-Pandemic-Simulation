@@ -17,6 +17,6 @@ public class Kibbutz extends Settlement {
 
     @Override
     public String toString() {
-        return "Kibbutz{'" + getName() + "', " + getPeople().size() + ", " +  getRamzorColor() + "}";
+        return "Kibbutz '" + getName() + "': population:" + getPeople().size() + ", sicks: " + numOfSicks() + ", RamzorColor: " +  getRamzorColor() + "\n";
     }
 }

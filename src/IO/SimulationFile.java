@@ -4,8 +4,8 @@ import Country.*;
 import Location.*;
 import Population.Healthy;
 import Population.Person;
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.*;
 import java.util.*;
 
 public class SimulationFile {
@@ -13,13 +13,13 @@ public class SimulationFile {
     public SimulationFile(String n) {
         nameOfFile = n;
     }
-    public List<Settlement> readFromFile() {
+    public List<Settlement> readFromFile() throws IOException {
         List<Settlement> settlementsList = new ArrayList<>();
-        try {
-            File myFile = new File(nameOfFile);
-            Scanner myReader = new Scanner(myFile);
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
+        FileReader myFile = new FileReader(nameOfFile);
+        BufferedReader myReader = new BufferedReader(myFile);
+        String data;
+        while ((data = myReader.readLine()) != null) {
+            try {
                 String[] arrOfData = data.split(";", 0);
                 Point p = new Point(Integer.parseInt(arrOfData[2]), Integer.parseInt(arrOfData[3]));
                 Size s = new Size(Integer.parseInt(arrOfData[4]), Integer.parseInt(arrOfData[5]));
@@ -64,11 +64,14 @@ public class SimulationFile {
                         settlementsList.add(myMoshav);
                         break;
                 }
+
+            } catch (RuntimeException e) {
+                System.out.println("File not found");
+                System.exit(-1);
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            System.exit(-1);
         }
+        myReader.close();
+        myFile.close();
         return settlementsList;
     }
 

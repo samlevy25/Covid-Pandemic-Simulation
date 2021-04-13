@@ -17,7 +17,6 @@ public class Map {
 
     @Override
     public String toString() {
-        return "Map{" + Arrays.toString(settlements) +
-                '}';
+        return  Arrays.toString(settlements) ;
     }
 }
