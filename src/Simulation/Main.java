@@ -82,29 +82,10 @@ public class Main {
         // Step 2: 1% Sick
         IVirus virus = choosingVirus();
         stepTwo(myMap, virus);
-        /////////////////////////////////////////////////////
-        int numberOfSicks;
-        for(int i = 0; i < 3; i++){
-            numberOfSicks = 0;
-            for(int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
-                if(myMap.getSettlements()[i].getPeople().get(j) instanceof Sick)
-                    numberOfSicks++;
-            }
-            System.out.println("StepTwo: " + numberOfSicks);
-        }
-        ////////////////////////////////////////////////////
+
         // Step 3: Simulation
         stepThree(myMap, virus);
-        ////////////////////////////////////////////////////
-        for(int i = 0; i < 3; i++){
-            numberOfSicks = 0;
-            for(int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
-                if(myMap.getSettlements()[i].getPeople().get(j) instanceof Sick)
-                    numberOfSicks++;
-            }
-            System.out.println("StepThree: " + numberOfSicks);
-        }
-        ////////////////////////////////////////////////////
+
         System.out.println(myMap);
     }
 }
