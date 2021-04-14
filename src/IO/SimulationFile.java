@@ -21,7 +21,7 @@ public class SimulationFile {
             BufferedReader myReader = new BufferedReader(myFile);
             String data;
             while ((data = myReader.readLine()) != null) {
-                String[] arrOfData = data.split(";", 0);
+                String[] arrOfData = data.replace(" ", "").split(";", 0);
                 Point p = new Point(Integer.parseInt(arrOfData[2]), Integer.parseInt(arrOfData[3]));
                 Size s = new Size(Integer.parseInt(arrOfData[4]), Integer.parseInt(arrOfData[5]));
                 Location l = new Location(p, s);
