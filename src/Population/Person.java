@@ -25,7 +25,8 @@ public abstract class Person {
     }
     public abstract double contagionProbability();
 
-    public Person contagion(IVirus virus) {
+    public Person contagion(IVirus virus) // contamination of a healthy person
+    {
         try{
             if(!(this instanceof Sick)){
                 return new Sick(this.age, this.location, this.settlement, virus, Clock.now());
