@@ -12,7 +12,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static Map stepOne() throws IOException {
+    private static Map stepOne() throws IOException // data recovery from a file to associate it with a map
+    {
         Scanner input = new Scanner(System.in);
         System.out.println("Hello, please enter your simulation file's name: ");
         String nameOfFile = input.nextLine();
@@ -21,7 +22,8 @@ public class Main {
         return new Map(s, s.length);
     }
 
-    private static IVirus choosingVirus() {
+    private static IVirus choosingVirus() // simulation of variant virus
+    {
         int variant;
         IVirus virus;
         Scanner input = new Scanner(System.in);
@@ -45,7 +47,8 @@ public class Main {
         return virus;
     }
 
-    private static void stepTwo(Map myMap, IVirus virus) {
+    private static void stepTwo(Map myMap, IVirus virus) //  definition of 1% all local residents as patients in one of the variants.
+    {
 
         for(int i = 0; i < myMap.getSettlements().length; i++){
             int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.01);
@@ -56,7 +59,8 @@ public class Main {
         }
     }
 
-    private static void stepThree(Map myMap, IVirus virus) {
+    private static void stepThree(Map myMap, IVirus virus) // random contagion simulation
+    {
         for (int count = 0; count < 5; count++) { // Simulate 5 time
             for (int i = 0; i < myMap.getSettlements().length; i++) {
                 for (int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
