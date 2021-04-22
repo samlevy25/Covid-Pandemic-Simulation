@@ -15,12 +15,13 @@ public class SimulationFile {
     }
     public List<Settlement> readFromFile() throws IOException {
         List<Settlement> settlementsList = new ArrayList<>();
-        FileReader myFile = new FileReader(nameOfFile);
-        BufferedReader myReader = new BufferedReader(myFile);
-        String data;
-        while ((data = myReader.readLine()) != null) {
-            try {
-                String[] arrOfData = data.split(";", 0);
+        try {
+
+            FileReader myFile = new FileReader(nameOfFile);
+            BufferedReader myReader = new BufferedReader(myFile);
+            String data;
+            while ((data = myReader.readLine()) != null) {
+                String[] arrOfData = data.replace(" ", "").split(";", 0);
                 Point p = new Point(Integer.parseInt(arrOfData[2]), Integer.parseInt(arrOfData[3]));
                 Size s = new Size(Integer.parseInt(arrOfData[4]), Integer.parseInt(arrOfData[5]));
                 Location l = new Location(p, s);
@@ -65,13 +66,16 @@ public class SimulationFile {
                         break;
                 }
 
-            } catch (RuntimeException e) {
-                System.out.println("File not found");
-                System.exit(-1);
+
             }
+
+            myReader.close();
+            myFile.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            System.exit(-1);
         }
-        myReader.close();
-        myFile.close();
         return settlementsList;
     }
 
