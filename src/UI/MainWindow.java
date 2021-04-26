@@ -1,12 +1,14 @@
 package UI;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class MainWindow {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Main Window");
         JPanel mapPanel = new JPanel();
-        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
+        GridLayout gridLayout = new GridLayout(3,1);
+        frame.setLayout(gridLayout);
 
         // create menu bar
         JMenuBar menuBar = new JMenuBar();
@@ -22,7 +24,7 @@ public class MainWindow {
         menuBar.add(helpMenu);
 
         // add items to the menus
-        JMenuItem = new JMenuItem();
+        //JMenuItem = new JMenuItem();
 
         // add to the frame all this shit
         frame.add(menuBar);
