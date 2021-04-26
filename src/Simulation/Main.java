@@ -12,11 +12,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static Map stepOne() throws IOException // data recovery from a file to associate it with a map
+    public static Map stepOne(String nameOfFile) throws IOException // data recovery from a file to associate it with a map
     {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Hello, please enter your simulation file's name: ");
-        String nameOfFile = input.nextLine();
         SimulationFile myFile = new SimulationFile(nameOfFile);
         Settlement[] s = myFile.readFromFile().toArray(new Settlement[0]);
         return new Map(s, s.length);
@@ -79,17 +76,7 @@ public class Main {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        // Step 1: Map loading
-        Map myMap = stepOne();
+    public static void main(String[] args)  {
 
-        // Step 2: 1% Sick
-        IVirus virus = choosingVirus();
-        stepTwo(myMap, virus);
-
-        // Step 3: Simulation
-        stepThree(myMap, virus);
-
-        System.out.println(myMap);
     }
 }

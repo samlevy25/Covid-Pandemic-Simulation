@@ -1,4 +1,7 @@
 package UI;
+import Country.Map;
+import Country.Settlement;
+import IO.SimulationFile;
 import Simulation.Main;
 
 import javax.swing.*;
@@ -7,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 
 public class MainWindow extends JFrame {
 
@@ -66,13 +70,22 @@ public class MainWindow extends JFrame {
     }
 
 
-    private void loadItemListener(ActionEvent e) {
+    private Map loadItemListener(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
+            SimulationFile myFile = new SimulationFile(selectedFile);
+            Settlement[] s = new Settlement[0];
+            try {
+                s = myFile.readFromFile().toArray(new Settlement[0]);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            return new Map(s, s.length);
         }
+        return null;
     }
 
 
