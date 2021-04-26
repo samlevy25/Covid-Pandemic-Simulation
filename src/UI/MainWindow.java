@@ -1,11 +1,85 @@
 package UI;
+import Simulation.Main;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
-public class MainWindow {
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Main Window");
+public class MainWindow extends JFrame {
+
+    private JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 15);
+    private JPanel mapPanel = new JPanel();
+    private JMenu fileMenu = new JMenu("File");
+    private JMenu simulationMenu = new JMenu("Simulation");
+    private JMenu helpMenu = new JMenu("Help");
+
+    MainWindow() {
+        super("Main Window");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setJMenuBar(createMenuBar());
+        JPanel contentPane = (JPanel) this.getContentPane();
+        contentPane.setLayout(new GridLayout(3, 1));
+        contentPane.add(mapPanel);
+        contentPane.add(slider);
+        this.pack();
+        this.setLocationRelativeTo(null);
+    }
+
+    private JMenuBar createMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem load = new JMenuItem("Load");
+        load.addActionListener(this::loadItemListener);
+        JMenuItem statistics = new JMenuItem("Statistics");
+        JMenuItem editMutations = new JMenuItem("Edit Mutations");
+        JMenuItem exit = new JMenuItem("Exit");
+        fileMenu.add(load);
+        fileMenu.add(statistics);
+        fileMenu.add(editMutations);
+        fileMenu.add(exit);
+
+        JMenu simulationMenu = new JMenu("Simulation");
+        JMenuItem play = new JMenuItem("Play");
+        JMenuItem pause = new JMenuItem("Pause");
+        JMenuItem stop = new JMenuItem("Stop");
+        JMenuItem setTicksPerDay = new JMenuItem("Set Ticks Per Day");
+        simulationMenu.add(play);
+        simulationMenu.add(pause);
+        simulationMenu.add(stop);
+        simulationMenu.add(setTicksPerDay);
+
+        JMenu helpMenu = new JMenu("Help");
+        JMenuItem help = new JMenuItem("Help");
+        JMenuItem about = new JMenuItem("About");
+        helpMenu.add(help);
+        helpMenu.add(about);
+
+        menuBar.add(fileMenu);
+        menuBar.add(simulationMenu);
+        menuBar.add(helpMenu);
+
+        return menuBar;
+    }
+
+
+    private void loadItemListener(ActionEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+    }
+
+
+        public static void main (String[]args){
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.setVisible(true);
+        /*
         JPanel mapPanel = new JPanel();
         GridLayout gridLayout = new GridLayout(3,1);
         frame.setLayout(gridLayout);
@@ -33,6 +107,7 @@ public class MainWindow {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setVisible(true);
-    }
+        frame.setVisible(true);*/
+        }
+
 }
