@@ -18,7 +18,7 @@ public class StatisticsWindow extends JFrame {
         up.add(colSelect);
         up.add(new TextField("Filter"));
         contentPane.add(up);
-        contentPane.add(new JTable("Stats Table"));
+       // contentPane.add(new JTable("Stats Table"));
         Panel down = new Panel();
         down.setLayout(new GridLayout(1,3));
         down.add(new JButton("Save"));
