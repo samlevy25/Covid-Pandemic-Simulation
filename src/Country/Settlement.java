@@ -5,20 +5,26 @@ import Location.Point;
 import Population.Healthy;
 import Population.Person;
 import Population.Sick;
+import Population.Vaccinated;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public abstract class Settlement {
+public abstract class Settlement
+{
     private final String name;
     private final Location location;
     private List<Person> people;
     private RamzorColor ramzorColor;
     private double mekadem;
     // new
-    private int max_person;
-    private int numberVaccineDose = 0;
+    private double max_person;
+    private int numberVaccineDose ;
     private Settlement[] settlementConnected;
     private List<Person> sickPerson;
     private List<Person> healthyPerson;
+    private int numOfDeads;
 
     Settlement(String n, Location l, List<Person> p) {
         name = n;
@@ -27,8 +33,14 @@ public abstract class Settlement {
         mekadem = 1;
         ramzorColor = RamzorColor.Green;
         // new
-        max_person = 100;
+        max_person = this.getPeople().size() * 1.3;
         settlementConnected = null;
+        numberVaccineDose = 0;
+        sickPerson = null;
+        healthyPerson = null ;
+        numOfDeads = 0;
+
+
     }
     public RamzorColor calculateRamzorGrade() {
         if ( mekadem < 0.4) {
@@ -66,7 +78,8 @@ public abstract class Settlement {
     }
     public boolean addPerson(Person newPerson)
     {
-        if ((getPeople().size() ) < max_person ) {
+        if (getPeople().size() < max_person )
+        {
             people.add(newPerson);
 
             if (newPerson instanceof Sick)
@@ -82,6 +95,15 @@ public abstract class Settlement {
             return false;
         }
     }
+
+    public void isDead(Sick miskine)
+    {
+        this.people.remove(miskine);
+        this.sickPerson.remove(miskine);
+        numOfDeads++;
+
+    }
+
 
     public boolean transferPerson(Person person, Settlement newPlace) {
 
@@ -100,6 +122,12 @@ public abstract class Settlement {
         return false;
     }
 
+    public void addNeighbours(Settlement newNeighbours)
+    {
+        ArrayList<Settlement> updateArray = new ArrayList<Settlement>(Arrays.asList(this.settlementConnected));
+        updateArray.add(newNeighbours);
+        this.settlementConnected = updateArray.toArray(this.settlementConnected);
+    }
     @Override
     public String toString() {
         return "Settlement{" +
@@ -140,5 +168,25 @@ public abstract class Settlement {
 
     public RamzorColor getRamzorColor() {
         return calculateRamzorGrade();
+    }
+
+    public double getSickPercent()
+    {
+        return (double)(this.numOfSicks() / getPeople().size());
+    }
+
+    public int getDead()
+    {
+        return this.numOfDeads;
+    }
+
+    public int getGivenVaccineDose()
+    {
+        int count = 0;
+        for(int i = 0; i < getPeople().size(); i++) {
+            if(getPeople().get(i) instanceof Vaccinated)
+                count++;
+        }
+        return count;
     }
 }
