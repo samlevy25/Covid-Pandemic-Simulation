@@ -10,6 +10,7 @@ import Population.Vaccinated;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Settlement
 {
@@ -24,7 +25,7 @@ public abstract class Settlement
     private Settlement[] settlementConnected;
     private List<Person> sickPerson;
     private List<Person> healthyPerson;
-    private int numOfDeads;
+    private int numOfDead;
 
     Settlement(String n, Location l, List<Person> p) {
         name = n;
@@ -32,13 +33,12 @@ public abstract class Settlement
         people = p;
         mekadem = 1;
         ramzorColor = RamzorColor.Green;
-        // new
-        max_person = this.getPeople().size() * 1.3;
+        max_person = this.people.size() * 1.3;
         settlementConnected = null;
         numberVaccineDose = 0;
         sickPerson = null;
         healthyPerson = null ;
-        numOfDeads = 0;
+        numOfDead = 0;
 
 
     }
@@ -100,24 +100,25 @@ public abstract class Settlement
     {
         this.people.remove(miskine);
         this.sickPerson.remove(miskine);
-        numOfDeads++;
-
+        numOfDead++;
     }
 
 
     public boolean transferPerson(Person person, Settlement newPlace) {
 
-        if( newPlace.addPerson(person))
+        if(newPlace.addPerson(person))
         {
-            people.remove(person);
+            double stat = newPlace.getRamzorColor().percent*getRamzorColor().percent;
+            float i = new Random().nextFloat();
+            if (i < stat) {
+                people.remove(person);
+                if (person instanceof Sick)
+                    sickPerson.remove(person);
+                if (person instanceof Healthy)
+                    healthyPerson.remove(person);
 
-            if (person instanceof Sick)
-                sickPerson.remove(person);
-
-            if (person instanceof Healthy)
-                healthyPerson.remove(person);
-
-            return true;
+                return true;
+            }
         }
         return false;
     }
@@ -177,7 +178,7 @@ public abstract class Settlement
 
     public int getDead()
     {
-        return this.numOfDeads;
+        return this.numOfDead;
     }
 
     public int getGivenVaccineDose()

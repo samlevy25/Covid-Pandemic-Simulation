@@ -27,9 +27,9 @@ public class StatisticsWindow extends JFrame {
             data[i][0] = map.getSettlements()[i].getName();
             data[i][1] = map.getSettlements()[i].getClass().getSimpleName();
             data[i][2] = map.getSettlements()[i].getRamzorColor().toString();
-            //data[i][3] = map.getSettlements()[i].getSickPercent().toString();
-            //data[i][4] = map.getSettlements()[i].getGivenVaccineDose().toString();
-            //data[i][5] = map.getSettlements()[i].getDead().toString();
+            data[i][3] = String.valueOf(map.getSettlements()[i].getSickPercent());
+            data[i][4] = String.valueOf(map.getSettlements()[i].getGivenVaccineDose());
+            data[i][5] = String.valueOf(map.getSettlements()[i].getDead());
             data[i][6] = String.valueOf(map.getSettlements()[i].getPeople().size());
         }
         JTable statsTable = new JTable(data, elements);
@@ -43,10 +43,5 @@ public class StatisticsWindow extends JFrame {
         contentPane.add(down);
         this.pack();
         this.setLocationRelativeTo(null);
-    }
-
-    public static void main(String[] args) {
-        StatisticsWindow mine = new StatisticsWindow();
-        mine.setVisible(true);
     }
 }

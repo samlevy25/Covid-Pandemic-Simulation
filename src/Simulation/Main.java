@@ -3,6 +3,7 @@ package Simulation;
 import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
+import Population.Healthy;
 import Population.Sick;
 import UI.MainWindow;
 import Virus.*;
@@ -45,27 +46,30 @@ public class Main {
         return virus;
     }
 
-    private static void stepTwo(Map myMap, IVirus virus) //  definition of 1% all local residents as patients in one of the variants.
+    private static void stepTwo(Map myMap, IVirus virus) //  definition of 20% all local residents as patients in one of the variants.
     {
 
         for(int i = 0; i < myMap.getSettlements().length; i++){
-            int onePercent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.01);
-            for (int j = 0; j < onePercent; j++) {
+            int percent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.2);
+            for (int j = 0; j < percent; j++) {
                 Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(j).contagion(virus);
-                myMap.getSettlements()[i].getPeople().add(newSick);
+                myMap.getSettlements()[i].addPerson(newSick);
             }
         }
     }
 
     private static void stepThree(Map myMap, IVirus virus) // random contagion simulation
     {
-        for (int count = 0; count < 5; count++) { // Simulate 5 time
-            for (int i = 0; i < myMap.getSettlements().length; i++) {
-                for (int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
-                    if (myMap.getSettlements()[i].getPeople().get(j) instanceof Sick) {
-                        for (int k = 0; k < 6; k++) { // Pick 6 random people and try to contagion them
-                            int rand = new Random().nextInt(myMap.getSettlements()[i].getPeople().size());
-                            if(virus.tryToContagion(myMap.getSettlements()[i].getPeople().get(j), myMap.getSettlements()[i].getPeople().get(rand))){
+
+        for (int i = 0; i < myMap.getSettlements().length; i++) {
+            for (int j = 0; j < myMap.getSettlements()[i].getPeople().size(); j++) {
+                if (myMap.getSettlements()[i].getPeople().get(j) instanceof Sick) {
+                    int k = 0;
+                    while (k < 3) { // Pick 3 random healthy person and try to contagion them
+                        int rand = new Random().nextInt(myMap.getSettlements()[i].getPeople().size());
+                        if (myMap.getSettlements()[i].getPeople().get(rand) instanceof Healthy) {
+                            k++;
+                            if (virus.tryToContagion((Sick) myMap.getSettlements()[i].getPeople().get(j), myMap.getSettlements()[i].getPeople().get(rand))) {
                                 Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(rand).contagion(virus);
                                 myMap.getSettlements()[i].getPeople().add(newSick);
                             }
@@ -74,6 +78,7 @@ public class Main {
                 }
             }
         }
+
     }
 
 

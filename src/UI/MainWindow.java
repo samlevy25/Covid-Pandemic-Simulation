@@ -20,6 +20,7 @@ public class MainWindow extends JFrame {
     private JMenu fileMenu = new JMenu("File");
     private JMenu simulationMenu = new JMenu("Simulation");
     private JMenu helpMenu = new JMenu("Help");
+    private Map myMap = null;
 
     public MainWindow() {
         super("Main Window");
@@ -41,8 +42,29 @@ public class MainWindow extends JFrame {
         JMenuItem load = new JMenuItem("Load...");
         load.addActionListener(this::loadItemListener);
         JMenuItem statistics = new JMenuItem("Statistics");
+        statistics.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (myMap != null){
+                StatisticsWindow statWindow = new StatisticsWindow(myMap);
+                statWindow.setVisible(true);
+            }
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Statistics Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         JMenuItem editMutations = new JMenuItem("Edit Mutations");
+        editMutations.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EditMutationWindow editWindow = new EditMutationWindow();
+                editWindow.setVisible(true);
+            }
+        });
         JMenuItem exit = new JMenuItem("Exit");
+        exit.addActionListener(e -> System.exit(0));
         fileMenu.add(load);
         fileMenu.add(statistics);
         fileMenu.add(editMutations);
@@ -72,7 +94,7 @@ public class MainWindow extends JFrame {
     }
 
 
-    private Map loadItemListener(ActionEvent e) {
+    private void loadItemListener(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
@@ -85,9 +107,8 @@ public class MainWindow extends JFrame {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            return new Map(s, s.length);
+            myMap = new Map(s, s.length);
         }
-        return null;
     }
 
 }

@@ -5,10 +5,10 @@ import java.awt.*;
 import static java.awt.Color.*;
 
 public enum RamzorColor {
-    Green(GREEN, 100),
-    Yellow(YELLOW, 80),
-    Orange(ORANGE, 60),
-    Red(RED, 40);
+    Green(GREEN, 1),
+    Yellow(YELLOW, 0.8),
+    Orange(ORANGE, 0.6),
+    Red(RED, 0.4);
 
     public final Color color;
     public final double percent;
