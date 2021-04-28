@@ -20,18 +20,15 @@ public abstract class Settlement {
     private List<Person> sickPerson;
     private List<Person> healthyPerson;
 
-    Settlement(String n, Location l, List<Person> p, int capacity, int numberDose, Settlement[] s, List<Person> sick, List<Person> healthy) {
+    Settlement(String n, Location l, List<Person> p) {
         name = n;
         location = l;
         people = p;
         mekadem = 1;
         ramzorColor = RamzorColor.Green;
         // new
-        max_person = capacity;
-        numberVaccineDose = numberDose;
-        settlementConnected = s;
-        sickPerson = sick;
-        healthyPerson = healthy;
+        max_person = 100;
+        settlementConnected = null;
     }
     public RamzorColor calculateRamzorGrade() {
         if ( mekadem < 0.4) {
@@ -67,7 +64,7 @@ public abstract class Settlement {
         int y = (int)(Math.random()*range_y)+location.getPosition().getM_y();
         return new Point(x, y);
     }
-    public boolean addPerson(Person newPerson) //new
+    public boolean addPerson(Person newPerson)
     {
         if ((getPeople().size() ) < max_person ) {
             people.add(newPerson);
@@ -86,7 +83,7 @@ public abstract class Settlement {
         }
     }
 
-    public boolean transferPerson(Person person, Settlement newPlace) { // new
+    public boolean transferPerson(Person person, Settlement newPlace) {
 
         if( newPlace.addPerson(person))
         {

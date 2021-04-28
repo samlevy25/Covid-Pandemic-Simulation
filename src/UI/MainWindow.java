@@ -38,7 +38,7 @@ public class MainWindow extends JFrame {
         JMenuBar menuBar = new JMenuBar();
 
         JMenu fileMenu = new JMenu("File");
-        JMenuItem load = new JMenuItem("Load");
+        JMenuItem load = new JMenuItem("Load...");
         load.addActionListener(this::loadItemListener);
         JMenuItem statistics = new JMenuItem("Statistics");
         JMenuItem editMutations = new JMenuItem("Edit Mutations");
