@@ -5,6 +5,7 @@ import IO.SimulationFile;
 import Simulation.Main;
 
 import javax.swing.*;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,7 @@ public class MainWindow extends JFrame {
         contentPane.add(mapPanel);
         contentPane.add(slider);
         this.pack();
+        this.setSize(600 ,600);
         this.setLocationRelativeTo(null);
     }
 
@@ -89,9 +91,13 @@ public class MainWindow extends JFrame {
     }
 
 
-        public static void main (String[]args){
+        public static void main (String[]args) throws Exception
+        {
+            UIManager.setLookAndFeel(new NimbusLookAndFeel());
+
             MainWindow mainWindow = new MainWindow();
             mainWindow.setVisible(true);
+
         /*
         JPanel mapPanel = new JPanel();
         GridLayout gridLayout = new GridLayout(3,1);

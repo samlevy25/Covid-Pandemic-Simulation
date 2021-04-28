@@ -2,6 +2,7 @@ package Country;
 
 import Location.Location;
 import Location.Point;
+import Population.Healthy;
 import Population.Person;
 import Population.Sick;
 import java.util.List;
@@ -12,12 +13,25 @@ public abstract class Settlement {
     private List<Person> people;
     private RamzorColor ramzorColor;
     private double mekadem;
-    Settlement(String n, Location l, List<Person> p) {
+    // new
+    private int max_person;
+    private int numberVaccineDose = 0;
+    private Settlement[] settlementConnected;
+    private List<Person> sickPerson;
+    private List<Person> healthyPerson;
+
+    Settlement(String n, Location l, List<Person> p, int capacity, int numberDose, Settlement[] s, List<Person> sick, List<Person> healthy) {
         name = n;
         location = l;
         people = p;
         mekadem = 1;
         ramzorColor = RamzorColor.Green;
+        // new
+        max_person = capacity;
+        numberVaccineDose = numberDose;
+        settlementConnected = s;
+        sickPerson = sick;
+        healthyPerson = healthy;
     }
     public RamzorColor calculateRamzorGrade() {
         if ( mekadem < 0.4) {
@@ -53,14 +67,40 @@ public abstract class Settlement {
         int y = (int)(Math.random()*range_y)+location.getPosition().getM_y();
         return new Point(x, y);
     }
-    public boolean addPerson(Person newPerson) {
-        people.add(newPerson);
-        return true;
+    public boolean addPerson(Person newPerson) //new
+    {
+        if ((getPeople().size() ) < max_person ) {
+            people.add(newPerson);
+
+            if (newPerson instanceof Sick)
+                sickPerson.add(newPerson);
+
+            if (newPerson instanceof Healthy)
+                healthyPerson.add(newPerson);
+
+            return true;
+        }
+        else{
+            System.out.println("The person cannot be added/transferred in the settlement");
+            return false;
+        }
     }
-    public boolean transferPerson(Person person, Settlement newPlace) {
-        people.remove(person);
-        newPlace.addPerson(person);
-        return true;
+
+    public boolean transferPerson(Person person, Settlement newPlace) { // new
+
+        if( newPlace.addPerson(person))
+        {
+            people.remove(person);
+
+            if (person instanceof Sick)
+                sickPerson.remove(person);
+
+            if (person instanceof Healthy)
+                healthyPerson.remove(person);
+
+            return true;
+        }
+        return false;
     }
 
     @Override
