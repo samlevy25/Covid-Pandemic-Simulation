@@ -21,7 +21,7 @@ public class MainWindow extends JFrame {
     private JMenu simulationMenu = new JMenu("Simulation");
     private JMenu helpMenu = new JMenu("Help");
 
-    MainWindow() {
+    public MainWindow() {
         super("Main Window");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(createMenuBar());
@@ -89,44 +89,5 @@ public class MainWindow extends JFrame {
         }
         return null;
     }
-
-
-        public static void main (String[]args) throws Exception
-        {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.setVisible(true);
-
-        /*
-        JPanel mapPanel = new JPanel();
-        GridLayout gridLayout = new GridLayout(3,1);
-        frame.setLayout(gridLayout);
-
-        // create menu bar
-        JMenuBar menuBar = new JMenuBar();
-
-        // build the different menus
-        JMenu fileMenu = new JMenu("File");
-        JMenu simulationMenu = new JMenu("Simulation");
-        JMenu helpMenu = new JMenu("Help");
-
-        // add the menus to the menu bar
-        menuBar.add(fileMenu);
-        menuBar.add(simulationMenu);
-        menuBar.add(helpMenu);
-
-        // add items to the menus
-        //JMenuItem = new JMenuItem();
-
-        // add to the frame all this shit
-        frame.add(menuBar);
-        frame.add(mapPanel);
-        frame.add(new JSlider(JSlider.HORIZONTAL, 0, 30, 15));
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);*/
-        }
 
 }

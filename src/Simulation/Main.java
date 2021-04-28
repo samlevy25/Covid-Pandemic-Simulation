@@ -4,6 +4,7 @@ import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
 import Population.Sick;
+import UI.MainWindow;
 import Virus.*;
 
 import java.io.IOException;
@@ -77,6 +78,7 @@ public class Main {
 
 
     public static void main(String[] args)  {
-
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.setVisible(true);
     }
 }
