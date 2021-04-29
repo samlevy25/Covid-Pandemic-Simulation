@@ -22,7 +22,7 @@ public class SimulationFile {
             String data;
             while ((data = myReader.readLine()) != null) {
                 String[] arrOfData = data.replace(" ", "").split(";", 0);
-                if (!arrOfData[0].equals("*")) {
+                if (!arrOfData[0].equals("#")) {
                     Point p = new Point(Integer.parseInt(arrOfData[2]), Integer.parseInt(arrOfData[3]));
                     Size s = new Size(Integer.parseInt(arrOfData[4]), Integer.parseInt(arrOfData[5]));
                     Location l = new Location(p, s);
@@ -76,7 +76,7 @@ public class SimulationFile {
                             index2 = i;
                     }
                     settlementsList.get(index1).addNeighbours(settlementsList.get(index2));
-                    settlementsList.get(index1).addNeighbours(settlementsList.get(index2));
+                    settlementsList.get(index2).addNeighbours(settlementsList.get(index1));
                 }
             }
             myReader.close();
