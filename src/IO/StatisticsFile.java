@@ -5,7 +5,7 @@ import java.io.*;
 public class StatisticsFile {
     private String nameOfFile;
 
-    StatisticsFile(String n) {
+    public  StatisticsFile(String n) {
         nameOfFile = n;
     }
 
