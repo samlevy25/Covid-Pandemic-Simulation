@@ -190,4 +190,10 @@ public abstract class Settlement
         }
         return count;
     }
+    public Location getLocation(){
+        return location;
+    }
+    public Settlement[] getNeighbours(){
+        return settlementConnected;
+    }
 }

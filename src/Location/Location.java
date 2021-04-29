@@ -27,4 +27,9 @@ public class Location {
         position = p;
         size = s;
     }
+    public Point getCenter() {
+        int x = (size.getWidth() - position.getM_x())/2;
+        int y = (size.getHeight() - position.getM_y())/2;
+        return new Point(x, y);
+    }
 }

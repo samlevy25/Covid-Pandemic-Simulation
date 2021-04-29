@@ -2,6 +2,7 @@ package UI;
 import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
+import Location.Point;
 import Simulation.Main;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class MainWindow extends JFrame {
     private JMenu simulationMenu = new JMenu("Simulation");
     private JMenu helpMenu = new JMenu("Help");
     private Map myMap = null;
+    private PanelDrawing mapPane;
 
     public MainWindow() {
         super("Main Window");
@@ -28,11 +30,40 @@ public class MainWindow extends JFrame {
         this.setJMenuBar(createMenuBar());
         JPanel contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-        contentPane.add(mapPanel);
         contentPane.add(slider, BorderLayout.PAGE_END);
+        this.setPreferredSize(new Dimension(600,600));
         this.pack();
-        this.setSize(600 ,600);
-        this.setLocationRelativeTo(null);
+    }
+
+    private class PanelDrawing extends JPanel {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponents(g);
+            for (int i = 0; i < myMap.getSettlements().length; i++){
+                Point p1 = myMap.getSettlements()[i].getLocation().getCenter();
+                for (int j = 0; j < myMap.getSettlements()[i].getNeighbours().length; j++){
+                    Point p2 = myMap.getSettlements()[i].getNeighbours()[j].getLocation().getCenter();
+                    g.drawLine(p1.getM_x(), p1.getM_y(), p2.getM_x(), p2.getM_y());
+                }
+                int x = myMap.getSettlements()[i].getLocation().getPosition().getM_x();
+                int y = myMap.getSettlements()[i].getLocation().getPosition().getM_y();
+                int width = myMap.getSettlements()[i].getLocation().getSize().getWidth();
+                int height = myMap.getSettlements()[i].getLocation().getSize().getHeight();
+                Color color = myMap.getSettlements()[i].getRamzorColor().color;
+                g.setColor(color);
+                g.fillRect(x, y, width, height);
+                g.setColor(Color.BLACK);
+                g.drawRect(x, y, width, height);
+                JLabel name = new JLabel(myMap.getSettlements()[i].getName());
+                name.setBounds(p1.getM_x(), p1.getM_y(), name.getPreferredSize().width, name.getPreferredSize().height);
+                this.add(name);
+            }
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(300, 300);
+        }
     }
 
     private JMenuBar createMenuBar() {
@@ -141,6 +172,8 @@ public class MainWindow extends JFrame {
                 ioException.printStackTrace();
             }
             myMap = new Map(s, s.length);
+            this.add(mapPane = new PanelDrawing(), BorderLayout.CENTER);
+            this.pack();
         }
     }
 }
