@@ -5,8 +5,8 @@ import Population.Person;
 import java.util.List;
 
 public class Kibbutz extends Settlement {
-    public Kibbutz(String n, Location l, List<Person> p) {
-        super(n, l , p);
+    public Kibbutz(String n, Location l, List<Person> p, int population) {
+        super(n, l , p, population);
     }
 
     @Override

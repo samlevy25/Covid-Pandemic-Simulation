@@ -5,8 +5,8 @@ import Population.Person;
 import java.util.List;
 
 public class Moshav extends Settlement {
-    public Moshav(String n, Location l, List<Person> p) {
-        super(n, l, p);
+    public Moshav(String n, Location l, List<Person> p, int population) {
+        super(n, l, p, population);
     }
 
     @Override

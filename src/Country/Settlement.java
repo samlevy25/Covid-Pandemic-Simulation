@@ -27,17 +27,17 @@ public abstract class Settlement
     private List<Person> healthyPerson;
     private int numOfDead;
 
-    Settlement(String n, Location l, List<Person> p) {
+    Settlement(String n, Location l, List<Person> p, int population) {
         name = n;
         location = l;
         people = p;
         mekadem = 1;
         ramzorColor = RamzorColor.Green;
-        max_person = this.people.size() * 1.3;
-        settlementConnected = null;
+        max_person = population * 1.3;
+        settlementConnected = new Settlement[0];
         numberVaccineDose = 0;
-        sickPerson = null;
-        healthyPerson = null ;
+        sickPerson = new ArrayList<>();
+        healthyPerson = new ArrayList<>();
         numOfDead = 0;
 
 

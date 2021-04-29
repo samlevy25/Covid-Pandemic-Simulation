@@ -6,8 +6,8 @@ import java.util.List;
 
 public class City extends Settlement {
 
-    public City(String n, Location l, List<Person> p) {
-        super(n, l, p);
+    public City(String n, Location l, List<Person> p, int population) {
+        super(n, l, p, population);
     }
 
     @Override

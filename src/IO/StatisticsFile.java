@@ -11,21 +11,22 @@ public class StatisticsFile {
 
     public void writeInCvs( String[][] saveData) throws IOException {
         try {
-            BufferedWriter br = new BufferedWriter(new FileWriter(this.nameOfFile));
-            StringBuilder sb = new StringBuilder();
+            FileWriter fw = new FileWriter(nameOfFile);
+            PrintWriter pw = new PrintWriter(fw);
 
             for (int i = 0 ; i < saveData.length ; i++)
             {
                 for (int j = 0; j < saveData[i].length ; j++)
                 {
-                    sb.append(saveData[i][j]);
-                   if ( saveData[i][j] != saveData[i][saveData[i].length - 1])
-                       sb.append(";");
+                    pw.append(saveData[i][j]);
+                   if (!saveData[i][j].equals(saveData[i][saveData[i].length - 1]))
+                       pw.append(";");
 
                 }
-
+                pw.println("");
             }
-
+            pw.close();
+            fw.close();
         }
         catch (FileNotFoundException e)
         {

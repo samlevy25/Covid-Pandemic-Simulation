@@ -27,9 +27,9 @@ public class MainWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(createMenuBar());
         JPanel contentPane = (JPanel) this.getContentPane();
-        contentPane.setLayout(new GridLayout(3, 1));
+        contentPane.setLayout(new BorderLayout());
         contentPane.add(mapPanel);
-        contentPane.add(slider);
+        contentPane.add(slider, BorderLayout.PAGE_END);
         this.pack();
         this.setSize(600 ,600);
         this.setLocationRelativeTo(null);
@@ -82,7 +82,40 @@ public class MainWindow extends JFrame {
 
         JMenu helpMenu = new JMenu("Help");
         JMenuItem help = new JMenuItem("Help");
+        help.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(new JFrame(), "Welcome to our simulation program!\n" +
+                        "This program allows to see the evolution of the virus development over time according to each settlements.\n" +
+                        "The map allows to see the result of the simulation carried out with the possibility of adjusting its speed thanks to the slider.\n" +
+                        "In the menu bar we have:\n" +
+                        "- File: Loading of a simulation file, display of statistics for each city, edit mutation which changes the current virus variant.\n" +
+                        "- Simulation: Play which starts a simulation according to the loaded file, pause only if a simulation is running, stop the simulation and number of ticks in a day\n" +
+                        "- Statistics window: Possibility to filter the results by key-word and column, in a selected settlements we can add sicks people and the number of doses of vaccines to add.\n" +
+                        "Let's simulate!");
+            }
+        });
         JMenuItem about = new JMenuItem("About");
+        about.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JDialog jdabout = new JDialog(new JFrame(), "About", false);
+                JPanel pan = new JPanel();
+                pan.add(new JLabel("<html>#About us:<br>" +
+                        "- 2nd year students of computer science engineer at Shamoon College of Engineering (SCE)<br>" +
+                        "<br>" +
+                        "#Creators:<br>" +
+                        "- Jacob Elbaz, ID: 336068895<br>" +
+                        "- Samuel Levy, ID: 345112148<br>" +
+                        "<br>" +
+                        "#Creation date :<br>" +
+                        "- May 4, 2021<html>"));
+                jdabout.add(pan);
+                jdabout.pack();
+                jdabout.setLocationRelativeTo(null);
+                jdabout.setVisible(true);
+            }
+        });
         helpMenu.add(help);
         helpMenu.add(about);
 
@@ -110,5 +143,4 @@ public class MainWindow extends JFrame {
             myMap = new Map(s, s.length);
         }
     }
-
 }

@@ -30,7 +30,7 @@ public class SimulationFile {
                     Random rand = new Random();
                     switch (arrOfData[0]) {
                         case "City":
-                            City myCity = new City(arrOfData[1], l, personList);
+                            City myCity = new City(arrOfData[1], l, personList, Integer.parseInt(arrOfData[6]));
                             for (int i = 0; i < Integer.parseInt(arrOfData[6]); i++) {
                                 int y = rand.nextInt(5);
                                 double val = rand.nextGaussian() * 6 + 9;
@@ -42,7 +42,7 @@ public class SimulationFile {
                             settlementsList.add(myCity);
                             break;
                         case "Kibbutz":
-                            Kibbutz myKibbutz = new Kibbutz(arrOfData[1], l, personList);
+                            Kibbutz myKibbutz = new Kibbutz(arrOfData[1], l, personList, Integer.parseInt(arrOfData[6]));
                             for (int i = 0; i < Integer.parseInt(arrOfData[6]); i++) {
                                 int y = rand.nextInt(5);
                                 double val = rand.nextGaussian() * 6 + 9;
@@ -54,7 +54,7 @@ public class SimulationFile {
                             settlementsList.add(myKibbutz);
                             break;
                         case "Moshav":
-                            Moshav myMoshav = new Moshav(arrOfData[1], l, personList);
+                            Moshav myMoshav = new Moshav(arrOfData[1], l, personList, Integer.parseInt(arrOfData[6]));
                             for (int i = 0; i < Integer.parseInt(arrOfData[6]); i++) {
                                 int y = rand.nextInt(5);
                                 double val = rand.nextGaussian() * 6 + 9;
