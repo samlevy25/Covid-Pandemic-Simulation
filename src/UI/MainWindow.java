@@ -16,23 +16,22 @@ import java.io.IOException;
 
 public class MainWindow extends JFrame {
 
-    private JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 15);
-    private JPanel mapPanel = new JPanel();
-    private JMenu fileMenu = new JMenu("File");
-    private JMenu simulationMenu = new JMenu("Simulation");
-    private JMenu helpMenu = new JMenu("Help");
-    private Map myMap = null;
-    private PanelDrawing mapPane;
+    private Map myMap;
+    private JPanel contentPane;
 
     public MainWindow() {
         super("Main Window");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setJMenuBar(createMenuBar());
-        JPanel contentPane = (JPanel) this.getContentPane();
+        this.setSize(new Dimension(600,600));
+        this.setLocationRelativeTo(null);
+
+        this.setJMenuBar(createMenuBar()); // Add the menu bar
+
+        contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BorderLayout());
+
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 15); // Add the Slider
         contentPane.add(slider, BorderLayout.PAGE_END);
-        this.setPreferredSize(new Dimension(600,600));
-        this.pack();
     }
 
     private class PanelDrawing extends JPanel {
@@ -45,6 +44,8 @@ public class MainWindow extends JFrame {
                     Point p2 = myMap.getSettlements()[i].getNeighbours()[j].getLocation().getCenter();
                     g.drawLine(p1.getM_x(), p1.getM_y(), p2.getM_x(), p2.getM_y());
                 }
+            }
+            for (int i = 0; i < myMap.getSettlements().length; i++){
                 int x = myMap.getSettlements()[i].getLocation().getPosition().getM_x();
                 int y = myMap.getSettlements()[i].getLocation().getPosition().getM_y();
                 int width = myMap.getSettlements()[i].getLocation().getSize().getWidth();
@@ -54,9 +55,6 @@ public class MainWindow extends JFrame {
                 g.fillRect(x, y, width, height);
                 g.setColor(Color.BLACK);
                 g.drawRect(x, y, width, height);
-                JLabel name = new JLabel(myMap.getSettlements()[i].getName());
-                name.setBounds(p1.getM_x(), p1.getM_y(), name.getPreferredSize().width, name.getPreferredSize().height);
-                this.add(name);
             }
         }
 
@@ -172,7 +170,17 @@ public class MainWindow extends JFrame {
                 ioException.printStackTrace();
             }
             myMap = new Map(s, s.length);
-            this.add(mapPane = new PanelDrawing(), BorderLayout.CENTER);
+            PanelDrawing mapPanel = new PanelDrawing();
+            for (int i = 0; i < myMap.getSettlements().length; i++){
+                JLabel name = new JLabel(myMap.getSettlements()[i].getName());
+                int x = myMap.getSettlements()[i].getLocation().getPosition().getM_x();
+                int y = myMap.getSettlements()[i].getLocation().getPosition().getM_y();
+                int width = myMap.getSettlements()[i].getLocation().getSize().getWidth();
+                int height = myMap.getSettlements()[i].getLocation().getSize().getHeight();
+                name.setBounds(x+2, y,100 ,height);
+                this.add(name);
+            }
+            contentPane.add(mapPanel, BorderLayout.CENTER);
             this.pack();
         }
     }

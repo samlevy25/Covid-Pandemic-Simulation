@@ -28,8 +28,8 @@ public class Location {
         size = s;
     }
     public Point getCenter() {
-        int x = (size.getWidth() - position.getM_x())/2;
-        int y = (size.getHeight() - position.getM_y())/2;
+        int x = size.getWidth()/2 + position.getM_x();
+        int y = size.getHeight()/2 + position.getM_y();
         return new Point(x, y);
     }
 }
