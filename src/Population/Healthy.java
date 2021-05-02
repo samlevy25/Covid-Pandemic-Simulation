@@ -14,7 +14,7 @@ public class Healthy extends Person {
         return 1;
     }
 
-    public Person vaccinate() // the person becomes vaccinated
+    public Vaccinated vaccinate() // the person becomes vaccinated
     {
         return new Vaccinated(this.getAge(), this.getLocation(), this.getSettlement(), Clock.now());
     }

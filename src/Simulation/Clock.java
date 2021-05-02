@@ -22,4 +22,8 @@ public class Clock {
     public String toString() {
         return "Clock = " + now();
     }
+
+    public static int getTicks_per_day() {
+        return ticks_per_day;
+    }
 }
