@@ -150,7 +150,7 @@ public class StatisticsWindow extends JFrame {
                     }
                 }
                 data[index][3] = String.valueOf(settlementSelected.getSickPercent());
-                System.out.println(statsTable.getSelectedRow());
+                data[index][2] = settlementSelected.getRamzorColor().toString();
                 statsTable.repaint();
                 mainW.repaint();
             }
@@ -186,5 +186,9 @@ public class StatisticsWindow extends JFrame {
                 ioException.printStackTrace();
             }
         }
+    }
+
+    public JTable getStatsTable() {
+        return statsTable;
     }
 }

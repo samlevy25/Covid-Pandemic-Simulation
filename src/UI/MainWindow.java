@@ -17,7 +17,7 @@ import java.io.IOException;
 public class MainWindow extends JFrame {
 
     private Map myMap;
-    private JPanel contentPane;
+    private final JPanel contentPane;
 
     public MainWindow() {
         super("Main Window");
@@ -179,11 +179,27 @@ public class MainWindow extends JFrame {
             PanelDrawing mapPanel = new PanelDrawing();
             for (int i = 0; i < myMap.getSettlements().length; i++){
                 JLabel name = new JLabel(myMap.getSettlements()[i].getName());
+                JButton button = new JButton();
+                button.setOpaque(false);
+                button.setContentAreaFilled(false);
+                button.setBorderPainted(false);
+                int finalI = i;
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        StatisticsWindow window = new StatisticsWindow(myMap, contentPane);
+                        window.getStatsTable().setRowSelectionInterval(finalI, finalI);
+                        window.setVisible(true);
+                    }
+                });
+
                 int x = myMap.getSettlements()[i].getLocation().getPosition().getM_x();
                 int y = myMap.getSettlements()[i].getLocation().getPosition().getM_y();
                 int width = myMap.getSettlements()[i].getLocation().getSize().getWidth();
                 int height = myMap.getSettlements()[i].getLocation().getSize().getHeight();
                 name.setBounds(x+2, y,100 ,height);
+                button.setBounds(x, y, width, height);
+                this.add(button);
                 this.add(name);
             }
             contentPane.add(mapPanel, BorderLayout.CENTER);
