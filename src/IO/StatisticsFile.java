@@ -2,7 +2,8 @@ package IO;
 
 import java.io.*;
 
-public class StatisticsFile {
+public class StatisticsFile
+{
     private String nameOfFile;
 
     public  StatisticsFile(String n) {
@@ -21,7 +22,6 @@ public class StatisticsFile {
                     pw.append(saveData[i][j]);
                    if (!saveData[i][j].equals(saveData[i][saveData[i].length - 1]))
                        pw.append(";");
-
                 }
                 pw.println("");
             }

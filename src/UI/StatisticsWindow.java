@@ -1,12 +1,22 @@
 package UI;
 
 import Country.Map;
+import Country.Settlement;
 import IO.StatisticsFile;
+import Population.Healthy;
+import Population.Person;
+import Population.Sick;
+import Simulation.Clock;
+import Virus.ChineseVariant;
+import Virus.IVirus;
+import Virus.SouthAfricanVariant;
 import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -41,6 +51,8 @@ public class StatisticsWindow extends JFrame {
         my_data = data;
         JTable statsTable = new JTable(data, elements);
         JScrollPane js = new JScrollPane(statsTable);
+
+        //table.setValueAt("aa", 0, 0);
         contentPane.add(js);
 
         Panel down = new Panel();
@@ -49,8 +61,63 @@ public class StatisticsWindow extends JFrame {
         save.addActionListener(this::saveCSV);
         down.add(save);
         JButton addSick = new JButton("Add Sick");
+        addSick.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Settlement settlementSelected = map.getSettlements()[statsTable.getSelectedRow()];
+
+                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.01);
+
+
+                for (int i = 0 ; i < numberOfSick; i++)
+                {
+                   int randomNumber = (int)Math.floor(Math.random()*(2+1));
+                   if (randomNumber == 0) // get SouthAfricanVariant
+                   {
+                       Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                       settlementSelected.isSick(currentHealthy); // update lists
+                       Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new SouthAfricanVariant(), Clock.now());
+                       // get sick
+
+                   }
+                   else if (randomNumber == 1) // get ChineseVariant
+                    {
+                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                        settlementSelected.isSick(currentHealthy); // update lists
+                        Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new ChineseVariant(), Clock.now());
+                        // get sick
+
+                    }
+                   else // get BritishVariant
+                    {
+                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                        settlementSelected.isSick(currentHealthy); // update lists
+                        Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new ChineseVariant(), Clock.now());
+                        // get sick
+
+                    }
+
+
+                }
+                System.out.println("hey");
+                //System.out.println(settlementSelected.numOfSicks());
+                data[statsTable.getSelectedRow()][3] = String.valueOf(settlementSelected.getSickPercent());
+            }
+        });
         down.add(addSick);
         JButton vaccinate = new JButton("Vaccinate");
+        vaccinate.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
+                data[statsTable.getSelectedRow()][4] = String.valueOf((Integer.parseInt(number)+Integer.parseInt(data[statsTable.getSelectedRow()][4])));
+            }
+        });
+
         down.add(vaccinate);
         contentPane.add(down, BorderLayout.PAGE_END);
         this.pack();

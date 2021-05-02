@@ -19,7 +19,7 @@ public class Sick extends Person {
     public boolean tryToDie() {
         return virus.tryToKill(this);
     }
-    Sick(int a, Point l, Settlement s, IVirus v, long t) {
+    public Sick(int a, Point l, Settlement s, IVirus v, long t) {
       super(a, l, s);
       this.virus = v;
       contagiousTime = t;

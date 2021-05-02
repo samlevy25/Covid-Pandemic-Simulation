@@ -37,7 +37,7 @@ public abstract class Settlement
         settlementConnected = new Settlement[0];
         numberVaccineDose = 0;
         sickPerson = new ArrayList<>();
-        healthyPerson = new ArrayList<>();
+        healthyPerson = new ArrayList<>(p);
         numOfDead = 0;
 
 
@@ -60,6 +60,7 @@ public abstract class Settlement
             return RamzorColor.Red;
         }
     }
+
     public double contagiousPercent() {
         double count = 0;
         for (Person person : people) {
@@ -96,11 +97,17 @@ public abstract class Settlement
         }
     }
 
-    public void isDead(Sick miskine)
+    public void isDead(Sick miskine1)
     {
-        this.people.remove(miskine);
-        this.sickPerson.remove(miskine);
+        this.people.remove(miskine1);
+        this.sickPerson.remove(miskine1);
         numOfDead++;
+    }
+
+    public void isSick(Healthy miskine2)
+    {
+        healthyPerson.remove(miskine2);
+        sickPerson.add(miskine2);
     }
 
 
@@ -173,7 +180,7 @@ public abstract class Settlement
 
     public double getSickPercent()
     {
-        return (double)(this.numOfSicks() / getPeople().size());
+        return this.numOfSicks() / (double)getPeople().size();
     }
 
     public int getDead()
@@ -190,10 +197,18 @@ public abstract class Settlement
         }
         return count;
     }
+
+    public void setRamzorColor() {
+        this.ramzorColor = ramzorColor;
+    }
+
     public Location getLocation(){
         return location;
     }
     public Settlement[] getNeighbours(){
         return settlementConnected;
     }
+    public int getNumOfHealthy() { return healthyPerson.size(); }
+    public List<Person> getHealthyPerson() { return this.healthyPerson ;}
 }
+
