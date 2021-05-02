@@ -24,8 +24,9 @@ import java.io.IOException;
 public class StatisticsWindow extends JFrame {
     private Map my_map;
     private String[][] my_data;
-    StatisticsWindow(Map map) {
+    StatisticsWindow(Map map, JPanel mainWin) {
         super("Statistics Window");
+        JPanel mainW = mainWin;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         my_map = map;
         JPanel contentPane = (JPanel) this.getContentPane();
@@ -71,12 +72,13 @@ public class StatisticsWindow extends JFrame {
 
                 int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.01);
 
-
+               // System.out.println(settlementSelected.getNumOfHealthy());
                 for (int i = 0 ; i < numberOfSick; i++)
                 {
                    int randomNumber = (int)Math.floor(Math.random()*(2+1));
                    if (randomNumber == 0) // get SouthAfricanVariant
                    {
+
                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                        settlementSelected.isSick(currentHealthy ,new SouthAfricanVariant() ); // update lists
 
@@ -100,9 +102,9 @@ public class StatisticsWindow extends JFrame {
 
 
                 }
-
-
                 data[statsTable.getSelectedRow()][3] = String.valueOf(settlementSelected.getSickPercent());
+                statsTable.repaint();
+                mainW.repaint();
             }
         });
         down.add(addSick);

@@ -75,7 +75,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (myMap != null){
-                StatisticsWindow statWindow = new StatisticsWindow(myMap);
+                StatisticsWindow statWindow = new StatisticsWindow(myMap, contentPane);
                 statWindow.setVisible(true);
             }
                 else {

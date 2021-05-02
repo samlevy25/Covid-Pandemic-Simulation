@@ -109,8 +109,10 @@ public abstract class Settlement
     public void isSick(Healthy miskine2, IVirus v)
     {
         healthyPerson.remove(miskine2);
-
-        sickPerson.add(new Sick(miskine2.getAge(), miskine2.getLocation(), miskine2.getSettlement() , v, Clock.now()));
+        people.remove(miskine2);
+        Sick newSick = new Sick(miskine2.getAge(), miskine2.getLocation(), miskine2.getSettlement() , v, Clock.now());
+        sickPerson.add(newSick);
+        people.add(newSick);
     }
 
 
