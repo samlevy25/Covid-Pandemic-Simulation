@@ -7,6 +7,7 @@ import Population.Healthy;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
+import Virus.BritishVariant;
 import Virus.ChineseVariant;
 import Virus.IVirus;
 import Virus.SouthAfricanVariant;
@@ -77,32 +78,30 @@ public class StatisticsWindow extends JFrame {
                    if (randomNumber == 0) // get SouthAfricanVariant
                    {
                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                       settlementSelected.isSick(currentHealthy); // update lists
-                       Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new SouthAfricanVariant(), Clock.now());
+                       settlementSelected.isSick(currentHealthy ,new SouthAfricanVariant() ); // update lists
+
                        // get sick
 
                    }
                    else if (randomNumber == 1) // get ChineseVariant
                     {
                         Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                        settlementSelected.isSick(currentHealthy); // update lists
-                        Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new ChineseVariant(), Clock.now());
-                        // get sick
+                        settlementSelected.isSick(currentHealthy,new ChineseVariant()); // update lists
+
 
                     }
                    else // get BritishVariant
                     {
                         Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                        settlementSelected.isSick(currentHealthy); // update lists
-                        Sick newSick = new Sick(currentHealthy.getAge(), currentHealthy.getLocation(), currentHealthy.getSettlement(),new ChineseVariant(), Clock.now());
-                        // get sick
+                        settlementSelected.isSick(currentHealthy, new BritishVariant()); // update lists
+
 
                     }
 
 
                 }
-                System.out.println("hey");
-                //System.out.println(settlementSelected.numOfSicks());
+
+
                 data[statsTable.getSelectedRow()][3] = String.valueOf(settlementSelected.getSickPercent());
             }
         });

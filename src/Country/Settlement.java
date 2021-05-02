@@ -6,6 +6,8 @@ import Population.Healthy;
 import Population.Person;
 import Population.Sick;
 import Population.Vaccinated;
+import Simulation.Clock;
+import Virus.IVirus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,10 +106,11 @@ public abstract class Settlement
         numOfDead++;
     }
 
-    public void isSick(Healthy miskine2)
+    public void isSick(Healthy miskine2, IVirus v)
     {
         healthyPerson.remove(miskine2);
-        sickPerson.add(miskine2);
+
+        sickPerson.add(new Sick(miskine2.getAge(), miskine2.getLocation(), miskine2.getSettlement() , v, Clock.now()));
     }
 
 
