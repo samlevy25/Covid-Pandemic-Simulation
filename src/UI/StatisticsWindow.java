@@ -31,7 +31,7 @@ public class StatisticsWindow extends JFrame {
     private TableRowSorter rs;
     private TableColumn selectedColumn = null ;
     StatisticsWindow(Map map, JPanel mainWin) {
-        super("Statistics Window");
+        super("Statistics");
         JPanel mainW = mainWin;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         my_map = map;
