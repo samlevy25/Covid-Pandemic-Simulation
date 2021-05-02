@@ -101,6 +101,12 @@ public class MainWindow extends JFrame {
 
         JMenu simulationMenu = new JMenu("Simulation");
         JMenuItem play = new JMenuItem("Play");
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
         JMenuItem pause = new JMenuItem("Pause");
         JMenuItem stop = new JMenuItem("Stop");
         JMenuItem setTicksPerDay = new JMenuItem("Set Ticks Per Day");

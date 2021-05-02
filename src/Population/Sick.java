@@ -8,8 +8,8 @@ import Virus.IVirus;
 public class Sick extends Person {
     private final long contagiousTime;
     private final IVirus virus;
-    public Person recover() {
-        return new Vaccinated(getAge(), getLocation(), getSettlement(), Clock.now());
+    public Convalescent recover() {
+        return new Convalescent(getAge(), getLocation(), getSettlement(), virus);
     }
 
     public long getContagiousTime() {

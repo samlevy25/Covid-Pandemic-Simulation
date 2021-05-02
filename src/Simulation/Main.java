@@ -1,10 +1,15 @@
+// Jacob Elbaz 336068895
+// Samuel Levy 345112148
+
 package Simulation;
 
 import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
 import Population.Healthy;
+import Population.Person;
 import Population.Sick;
+import Population.Vaccinated;
 import UI.MainWindow;
 import Virus.*;
 
@@ -14,45 +19,24 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static Map stepOne(String nameOfFile) throws IOException // data recovery from a file to associate it with a map
-    {
-        SimulationFile myFile = new SimulationFile(nameOfFile);
-        Settlement[] s = myFile.readFromFile().toArray(new Settlement[0]);
-        return new Map(s, s.length);
+    private static IVirus randomVirus() {
+        IVirus[] arrVirus = {new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()};
+        return arrVirus[new Random().nextInt(3)];
     }
 
-    private static IVirus choosingVirus() // simulation of variant virus
-    {
-        int variant;
-        IVirus virus;
-        Scanner input = new Scanner(System.in);
-        do{
-            System.out.println("Choose a variant virus to start simulation: \n1.Chinese Variant  2.British Variant  3.South-Africa Variant");
-            variant = input.nextInt();
-            switch (variant) {
-                case 1:
-                    virus = new ChineseVariant();
-                    break;
-                case 2:
-                    virus = new BritishVariant();
-                    break;
-                case 3:
-                    virus = new SouthAfricanVariant();
-                    break;
-                default:
-                    virus = null;
-            }
-        }while(virus == null);
-        return virus;
+    private static int exclusiveRandom(int bound, int i){
+        int rand = i;
+        while(rand == i)
+            rand = new Random().nextInt(bound);
+        return rand;
     }
 
-    private static void stepTwo(Map myMap, IVirus virus) //  definition of 20% all local residents as patients in one of the variants.
+    private static void stepTwo(Map myMap) //  definition of 20% all local residents as patients in one of the variants.
     {
-
         for(int i = 0; i < myMap.getSettlements().length; i++){
             int percent = (int) (myMap.getSettlements()[i].getPeople().size() * 0.2);
             for (int j = 0; j < percent; j++) {
-                Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(j).contagion(virus);
+                Sick newSick = (Sick) myMap.getSettlements()[i].getPeople().remove(j).contagion(randomVirus());
                 myMap.getSettlements()[i].addPerson(newSick);
             }
         }
@@ -78,9 +62,26 @@ public class Main {
                 }
             }
         }
-
+        for (int i = 0; i < myMap.getSettlements().length; i++){
+            myMap.getSettlements()[i].checkConvalescents();
+        }
     }
 
+    private static void stepFour(Map map){
+        Person p = null;
+        int size = map.getSettlements().length;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < map.getSettlements()[i].getPeople().size()*0.03; j++)
+                p = map.getSettlements()[i].getPeople().get(j);
+                map.getSettlements()[i].transferPerson(p, map.getSettlements()[exclusiveRandom(size, i)]);
+        }
+    }
+
+    private static void stepFive(Map map){
+        for (int i = 0; i < map.getSettlements().length; i++){
+            map.getSettlements()[i].vaccinePopulation();
+        }
+    }
 
     public static void main(String[] args)  {
 

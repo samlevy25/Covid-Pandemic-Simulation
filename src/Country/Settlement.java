@@ -2,10 +2,7 @@ package Country;
 
 import Location.Location;
 import Location.Point;
-import Population.Healthy;
-import Population.Person;
-import Population.Sick;
-import Population.Vaccinated;
+import Population.*;
 import Simulation.Clock;
 import Virus.IVirus;
 
@@ -25,7 +22,7 @@ public abstract class Settlement
     private double max_person;
     private int numberVaccineDose ;
     private Settlement[] settlementConnected;
-    private List<Person> sickPerson;
+    private List<Sick> sickPerson;
     private List<Person> healthyPerson;
     private int numOfDead;
 
@@ -86,7 +83,7 @@ public abstract class Settlement
             people.add(newPerson);
 
             if (newPerson instanceof Sick)
-                sickPerson.add(newPerson);
+                sickPerson.add((Sick) newPerson);
 
             if (newPerson instanceof Healthy)
                 healthyPerson.add(newPerson);
@@ -118,21 +115,19 @@ public abstract class Settlement
 
     public boolean transferPerson(Person person, Settlement newPlace) {
 
-        if(newPlace.addPerson(person))
-        {
-            double stat = newPlace.getRamzorColor().percent*getRamzorColor().percent;
-            float i = new Random().nextFloat();
-            if (i < stat) {
-                people.remove(person);
-                if (person instanceof Sick)
-                    sickPerson.remove(person);
-                if (person instanceof Healthy)
-                    healthyPerson.remove(person);
+        double stat = newPlace.getRamzorColor().percent * getRamzorColor().percent;
+        float i = new Random().nextFloat();
+        if (i < stat && newPlace.addPerson(person)) {
+            people.remove(person);
+            if (person instanceof Sick)
+                sickPerson.remove(person);
+            else
+                healthyPerson.remove(person);
 
-                return true;
-            }
+            return true;
         }
-        return false;
+        else
+            return false;
     }
 
     public void addNeighbours(Settlement newNeighbours)
@@ -215,5 +210,31 @@ public abstract class Settlement
     }
     public int getNumOfHealthy() { return healthyPerson.size(); }
     public List<Person> getHealthyPerson() { return this.healthyPerson ;}
+    public void checkConvalescents() {
+        for (int i = 0; i < sickPerson.size(); i++) {
+            if (sickPerson.get(i).getContagiousTime()/Clock.getTicks_per_day() > 25){
+                Convalescent convalescent = sickPerson.remove(i).recover();
+                healthyPerson.add(convalescent);
+                people = new ArrayList<Person>(healthyPerson);
+                people.addAll(sickPerson);
+            }
+        }
+    }
+
+    public int getNumberVaccineDose() {
+        return numberVaccineDose;
+    }
+
+    public void vaccinePopulation(){
+        while (numberVaccineDose != 0 && healthyPerson.size() != 0){
+            for (int j = 0; j < healthyPerson.size(); j++){
+                if (healthyPerson.get(j) instanceof Healthy){
+                    Vaccinated person = ((Healthy) healthyPerson.remove(j)).vaccinate();
+                    healthyPerson.add(person);
+                    numberVaccineDose--;
+                }
+            }
+        }
+    }
 }
 
