@@ -15,6 +15,8 @@ import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,6 +26,10 @@ import java.io.IOException;
 public class StatisticsWindow extends JFrame {
     private Map my_map;
     private String[][] my_data;
+    JTable statsTable ;
+    private String selectedComboBox;
+    private TableRowSorter rs;
+    private TableColumn selectedColumn = null ;
     StatisticsWindow(Map map, JPanel mainWin) {
         super("Statistics Window");
         JPanel mainW = mainWin;
@@ -34,9 +40,54 @@ public class StatisticsWindow extends JFrame {
         Panel up = new Panel();
         up.setLayout(new BoxLayout(up, BoxLayout.LINE_AXIS));
         String[] elements = {"Name", "Type", "RamzorColor", "Sick Percent", "Given Vaccine Dose", "Dead", "Current Population"};
-        JComboBox<String> colSelect = new JComboBox(elements);
+        String[] elementComboBox ={ "None", "Name","Type","RamzorColor"};
+        TextField FilterText = new TextField("Filter");
+        FilterText.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                rs.setRowFilter(RowFilter.regexFilter(FilterText.getText(), 0, selectedColumn.getModelIndex()));
+            }
+        });
+
+        JComboBox<String> colSelect = new JComboBox(elementComboBox);
+        colSelect.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                selectedComboBox = String.valueOf(colSelect.getSelectedItem());
+                switch (selectedComboBox)
+                {
+                    case "None" :
+                    {
+                        selectedColumn = null ;
+                        rs.setRowFilter(RowFilter.regexFilter(""));
+                        break;
+                    }
+                    case "Name" :
+                    {
+                        selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(0);
+                        break;
+                    }
+                    case "Type" :
+                    {
+                        selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(1);
+                        break;
+                    }
+                    case "RamzorColor" :
+                    {
+                        selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(2);
+                        break;
+                    }
+                }
+                if (selectedComboBox == null) { return; }
+            }
+        });
+
         up.add(colSelect);
-        up.add(new TextField("Filter"));
+        up.add(FilterText);
         contentPane.add(up, BorderLayout.PAGE_START);
 
 
@@ -51,7 +102,10 @@ public class StatisticsWindow extends JFrame {
             data[i][6] = String.valueOf(map.getSettlements()[i].getPeople().size());
         }
         my_data = data;
-        JTable statsTable = new JTable(data, elements);
+        statsTable = new JTable(data, elements);
+        rs = new TableRowSorter<>(statsTable.getModel());
+        statsTable.setRowSorter(rs);
+        statsTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane js = new JScrollPane(statsTable);
 
         //table.setValueAt("aa", 0, 0);
@@ -68,41 +122,35 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Settlement settlementSelected = map.getSettlements()[statsTable.getSelectedRow()];
 
-                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.01);
 
-               // System.out.println(settlementSelected.getNumOfHealthy());
+                String str = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
+                int index = map.getSettlement(str);
+                Settlement settlementSelected = map.getSettlements()[index];
+
+                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
+
                 for (int i = 0 ; i < numberOfSick; i++)
                 {
                    int randomNumber = (int)Math.floor(Math.random()*(2+1));
                    if (randomNumber == 0) // get SouthAfricanVariant
                    {
-
                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                        settlementSelected.isSick(currentHealthy ,new SouthAfricanVariant() ); // update lists
-
-                       // get sick
-
                    }
                    else if (randomNumber == 1) // get ChineseVariant
                     {
                         Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                         settlementSelected.isSick(currentHealthy,new ChineseVariant()); // update lists
-
-
                     }
                    else // get BritishVariant
                     {
                         Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                         settlementSelected.isSick(currentHealthy, new BritishVariant()); // update lists
-
-
                     }
-
-
                 }
-                data[statsTable.getSelectedRow()][3] = String.valueOf(settlementSelected.getSickPercent());
+                data[index][3] = String.valueOf(settlementSelected.getSickPercent());
+                System.out.println(statsTable.getSelectedRow());
                 statsTable.repaint();
                 mainW.repaint();
             }

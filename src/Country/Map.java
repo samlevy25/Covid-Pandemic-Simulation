@@ -15,6 +15,16 @@ public class Map {
         return settlements;
     }
 
+    public int getSettlement(String s)
+    {
+        for (int i = 0 ; i < settlements.length; i++)
+        {
+            if (settlements[i].getName().equals(s))
+                return i;
+        }
+        return -1;
+    }
+
     @Override
     public String toString() {
         return  Arrays.toString(settlements) ;
