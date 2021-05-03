@@ -31,6 +31,10 @@ public class MainWindow extends JFrame {
         contentPane.setLayout(new BorderLayout());
 
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 15); // Add the Slider
+        slider.setMinorTickSpacing(1);
+        slider.setMajorTickSpacing(5);
+        slider.setPaintLabels(true);
+        slider.setPaintTicks(true);
         contentPane.add(slider, BorderLayout.PAGE_END);
     }
 
