@@ -4,11 +4,12 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-public class EditMutationWindow extends JFrame {
+public class EditMutationWindow extends JDialog {
     private JTable editTab;
 
     public EditMutationWindow(){
-        super("Edit Mutation");
+        this.setModal(true);
+        this.setTitle("Edit Mutation");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         String[] elements = {"British Variant", "Chinese Variant", "South Africa Variant"};
         Object[][] data = {{true, true, true}, {true, true, true},{true, true, true}};
