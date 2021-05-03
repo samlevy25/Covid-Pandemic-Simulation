@@ -7,6 +7,7 @@ import Population.Healthy;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
+import Simulation.Main;
 import Virus.BritishVariant;
 import Virus.ChineseVariant;
 import Virus.IVirus;
@@ -132,22 +133,8 @@ public class StatisticsWindow extends JFrame {
 
                 for (int i = 0 ; i < numberOfSick; i++)
                 {
-                   int randomNumber = (int)Math.floor(Math.random()*(2+1));
-                   if (randomNumber == 0) // get SouthAfricanVariant
-                   {
-                       Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                       settlementSelected.isSick(currentHealthy ,new SouthAfricanVariant() ); // update lists
-                   }
-                   else if (randomNumber == 1) // get ChineseVariant
-                    {
-                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                        settlementSelected.isSick(currentHealthy,new ChineseVariant()); // update lists
-                    }
-                   else // get BritishVariant
-                    {
-                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                        settlementSelected.isSick(currentHealthy, new BritishVariant()); // update lists
-                    }
+                    Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                    settlementSelected.isSick(currentHealthy , Main.randomVirus());
                 }
                 data[index][3] = String.valueOf(settlementSelected.getSickPercent());
                 data[index][2] = settlementSelected.getRamzorColor().toString();

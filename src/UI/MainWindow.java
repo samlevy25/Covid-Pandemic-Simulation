@@ -92,8 +92,7 @@ public class MainWindow extends JFrame {
         editMutations.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditMutationWindow editWindow = new EditMutationWindow();
-                editWindow.setVisible(true);
+                EditMutationWindow editWindow = new EditMutationWindow(myMap.getVirus());
             }
         });
         JMenuItem exit = new JMenuItem("Exit");

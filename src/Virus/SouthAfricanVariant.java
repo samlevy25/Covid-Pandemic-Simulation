@@ -11,6 +11,7 @@ public class SouthAfricanVariant implements IVirus {
     private static final double killAbove18 = 0.08;
     private static final double contagionUnder18 = 0.6;
     private static final double contagionAbove18 = 0.5;
+    private boolean[] mutations = {true, true, true};
 
     public double killingProbability(Person p) {
         if (p.getAge() <= 18)
@@ -53,5 +54,15 @@ public class SouthAfricanVariant implements IVirus {
     @Override
     public String toString() {
         return "South-Africa Variant";
+    }
+
+    @Override
+    public boolean[] getMutations() {
+        return mutations;
+    }
+
+    @Override
+    public void setMutations(int index, boolean bool) {
+        this.mutations[index] = bool;
     }
 }

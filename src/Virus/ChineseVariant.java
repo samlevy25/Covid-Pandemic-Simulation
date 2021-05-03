@@ -13,6 +13,8 @@ public class ChineseVariant implements IVirus {
     private static final double contagionUnder18 = 0.2;
     private static final double contagionUnder55 = 0.5;
     private static final double contagionAbove55 = 0.7;
+    private boolean[] mutations = {true, true, true};
+
 
     public double killingProbability(Person p) {
         if (p.getAge() <= 18)
@@ -59,4 +61,14 @@ public class ChineseVariant implements IVirus {
     public String toString() {
         return "Chinese Variant";
     }
+
+    @Override
+    public boolean[] getMutations() {
+        return mutations;
+    }
+    @Override
+    public void setMutations(int i, boolean b) {
+        this.mutations[i] = b;
+    }
+
 }

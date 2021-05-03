@@ -10,6 +10,7 @@ public class BritishVariant implements IVirus {
     private static final double killUnder18 = 0.01;
     private static final double killAbove18 = 0.1;
     private static final double contagion = 0.7;
+    private boolean[] mutations = {true, true, true};
 
     public double killingProbability(Person p) {
         if (p.getAge() <= 18)
@@ -48,5 +49,15 @@ public class BritishVariant implements IVirus {
     @Override
     public String toString() {
         return "British Variant";
+    }
+
+    @Override
+    public boolean[] getMutations() {
+        return mutations;
+    }
+
+    @Override
+    public void setMutations(int i, boolean b) {
+        this.mutations[i] = b;
     }
 }
