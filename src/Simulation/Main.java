@@ -19,7 +19,8 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static IVirus randomVirus() {
+    private static IVirus randomVirus()
+    {
         IVirus[] arrVirus = {new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()};
         return arrVirus[new Random().nextInt(3)];
     }

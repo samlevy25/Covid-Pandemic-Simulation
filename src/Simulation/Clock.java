@@ -26,4 +26,6 @@ public class Clock {
     public static int getTicks_per_day() {
         return ticks_per_day;
     }
+
+    public static void setTicks_per_day(int newTicks_per_day) {ticks_per_day = newTicks_per_day;}
 }
