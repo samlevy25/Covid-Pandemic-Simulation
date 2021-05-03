@@ -3,9 +3,12 @@ import Country.Map;
 import Country.Settlement;
 import IO.SimulationFile;
 import Location.Point;
+import Simulation.Clock;
 import Simulation.Main;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,6 +21,9 @@ public class MainWindow extends JFrame {
 
     private Map myMap;
     private final JPanel contentPane;
+    private PanelDrawing mapPanel;
+    private boolean fileLoaded = false;
+    private boolean closed = false;
 
     public MainWindow() {
         super("Main Window");
@@ -30,12 +36,29 @@ public class MainWindow extends JFrame {
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BorderLayout());
 
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 30, 15); // Add the Slider
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50); // Add the Slider
         slider.setMinorTickSpacing(1);
-        slider.setMajorTickSpacing(5);
+        slider.setMajorTickSpacing(10);
         slider.setPaintLabels(true);
         slider.setPaintTicks(true);
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                Clock.setSnooze(slider.getValue());
+            }
+        });
         contentPane.add(slider, BorderLayout.PAGE_END);
+    }
+    public boolean hasFileLoaded(){
+        return fileLoaded;
+    }
+
+    public boolean isClosed(){
+        return closed;
+    }
+
+    public Map getMap() {
+        return myMap;
     }
 
     private class PanelDrawing extends JPanel {
@@ -96,7 +119,13 @@ public class MainWindow extends JFrame {
             }
         });
         JMenuItem exit = new JMenuItem("Exit");
-        exit.addActionListener(e -> System.exit(0));
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closed = true;
+                System.exit(0);
+            }
+        });
         fileMenu.add(load);
         fileMenu.add(statistics);
         fileMenu.add(editMutations);
@@ -107,12 +136,67 @@ public class MainWindow extends JFrame {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if(fileLoaded)
+                    myMap.setState(true);
+                else {
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Play Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         JMenuItem pause = new JMenuItem("Pause");
+        pause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!fileLoaded)
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Pause Error",
+                            JOptionPane.ERROR_MESSAGE);
+                else if(!myMap.runningSimulation())
+                    JOptionPane.showMessageDialog(new JFrame(), "There is no running simulation.", "Pause Error",
+                            JOptionPane.ERROR_MESSAGE);
+                else
+                    myMap.setState(false);
+            }
+        });
         JMenuItem stop = new JMenuItem("Stop");
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!fileLoaded)
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Stop Error",
+                            JOptionPane.ERROR_MESSAGE);
+                else{
+                    myMap.setState(false);
+                    myMap = null;
+                    MainWindow.this.contentPane.remove(mapPanel);
+                    MainWindow.this.repaint();
+                }
+            }
+        });
         JMenuItem setTicksPerDay = new JMenuItem("Set Ticks Per Day");
+        setTicksPerDay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!fileLoaded)
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Set Ticks Error",
+                            JOptionPane.ERROR_MESSAGE);
+                else{
+                    SpinnerNumberModel spinMod = new SpinnerNumberModel(Clock.getTicks_per_day(), 1, 100, 1);
+                    JSpinner spinner = new JSpinner(spinMod);
+                    int optDlg = JOptionPane.showOptionDialog(null, spinner, "Set Ticks Per Day",
+                            JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                    if(optDlg ==0){
+                        try{
+                            long ticks = (long)Float.parseFloat(spinner.getValue().toString());
+                            Clock.setTicks_per_day(ticks);
+                        }
+                        catch (Exception exception){
+                            JOptionPane.showMessageDialog(new JFrame(), "Error occurred", "Set Ticks Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            }
+        });
         simulationMenu.add(play);
         simulationMenu.add(pause);
         simulationMenu.add(stop);
@@ -178,8 +262,9 @@ public class MainWindow extends JFrame {
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            myMap = new Map(s, s.length);
-            PanelDrawing mapPanel = new PanelDrawing();
+            myMap = new Map(s);
+            fileLoaded = true;
+            mapPanel = new PanelDrawing();
             for (int i = 0; i < myMap.getSettlements().length; i++){
                 JLabel name = new JLabel(myMap.getSettlements()[i].getName());
                 JButton button = new JButton();

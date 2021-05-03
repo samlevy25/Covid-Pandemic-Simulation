@@ -103,11 +103,11 @@ public abstract class Settlement
         numOfDead++;
     }
 
-    public void isSick(Healthy miskine2, IVirus v)
+    public void isSick(Person miskine2, IVirus v)
     {
         healthyPerson.remove(miskine2);
         people.remove(miskine2);
-        Sick newSick = new Sick(miskine2.getAge(), miskine2.getLocation(), miskine2.getSettlement() , v, Clock.now());
+        Sick newSick = (Sick) miskine2.contagion(v);
         sickPerson.add(newSick);
         people.add(newSick);
     }
@@ -212,7 +212,7 @@ public abstract class Settlement
     public List<Person> getHealthyPerson() { return this.healthyPerson ;}
     public void checkConvalescents() {
         for (int i = 0; i < sickPerson.size(); i++) {
-            if (sickPerson.get(i).getContagiousTime()/Clock.getTicks_per_day() > 25){
+            if ((Clock.now() - sickPerson.get(i).getContagiousTime())/Clock.getTicks_per_day() > 25){
                 Convalescent convalescent = sickPerson.remove(i).recover();
                 healthyPerson.add(convalescent);
                 people = new ArrayList<Person>(healthyPerson);
@@ -223,6 +223,10 @@ public abstract class Settlement
 
     public int getNumberVaccineDose() {
         return numberVaccineDose;
+    }
+
+    public List<Sick> getSickPerson() {
+        return sickPerson;
     }
 
     public void vaccinePopulation(){

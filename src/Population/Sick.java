@@ -37,4 +37,8 @@ public class Sick extends Person {
                 ", virus=" + virus +
                  super.toString();
     }
+
+    public IVirus getVirus() {
+        return virus;
+    }
 }
