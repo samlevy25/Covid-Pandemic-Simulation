@@ -101,7 +101,7 @@ public class MainWindow extends JFrame {
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (myMap != null){
+                if (fileLoaded){
                 StatisticsWindow statWindow = new StatisticsWindow(myMap, contentPane);
                 statWindow.setVisible(true);
             }
@@ -115,7 +115,11 @@ public class MainWindow extends JFrame {
         editMutations.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                EditMutationWindow editWindow = new EditMutationWindow(myMap.getVirus());
+                if(fileLoaded){
+                    EditMutationWindow editWindow = new EditMutationWindow(myMap.getVirus());}
+                else
+                    JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Statistics Error",
+                            JOptionPane.ERROR_MESSAGE);
             }
         });
         JMenuItem exit = new JMenuItem("Exit");
