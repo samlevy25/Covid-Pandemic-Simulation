@@ -32,6 +32,7 @@ public class StatisticsWindow extends JFrame {
     private String selectedComboBox;
     private TableRowSorter rs;
     private TableColumn selectedColumn = null ;
+    private boolean flag = true;
 
     /**
      * Constructor
@@ -59,8 +60,11 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) //
             {
+
                 rs.setRowFilter(RowFilter.regexFilter(FilterText.getText(), 0, selectedColumn.getModelIndex()));
+
             }
+
         });
 
         JComboBox<String> colSelect = new JComboBox(elementComboBox);
@@ -74,31 +78,40 @@ public class StatisticsWindow extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
                 selectedComboBox = String.valueOf(colSelect.getSelectedItem());
+
+                if (selectedComboBox == null) { return; }
+
                 switch (selectedComboBox)
                 {
                     case "None" :
                     {
+                        flag = true;
                         selectedColumn = null ;
                         rs.setRowFilter(RowFilter.regexFilter(""));
                         break;
                     }
                     case "Name" :
                     {
+
+                        flag= false;
+                        System.out.println(flag);
                         selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(0);
                         break;
                     }
                     case "Type" :
                     {
+                        flag = false;
                         selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(1);
                         break;
                     }
                     case "RamzorColor" :
                     {
+                        flag = false;
                         selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(2);
                         break;
                     }
                 }
-                if (selectedComboBox == null) { return; }
+
             }
         });
 
@@ -143,22 +156,26 @@ public class StatisticsWindow extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
 
-
-                String str = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
-                int index = map.getSettlement(str);
-                Settlement settlementSelected = map.getSettlements()[index];
-
-                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
-
-                for (int i = 0 ; i < numberOfSick; i++)
+                if(flag)
                 {
-                    Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                    settlementSelected.isSick(currentHealthy , Main.randomVirus(map));
+                    String str = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
+                    int index = map.getSettlement(str);
+                    Settlement settlementSelected = map.getSettlements()[index];
+
+                    int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
+
+                    for (int i = 0; i < numberOfSick; i++) {
+                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                        settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
+                    }
+                    data[index][3] = String.valueOf(settlementSelected.getSickPercent());
+                    data[index][2] = settlementSelected.getRamzorColor().toString();
+                    statsTable.repaint();
+                    mainW.repaint();
+                }else
+                {
+                    JOptionPane.showMessageDialog(new JFrame(), "To add sick person , go back to the original table with the option \"None\".");
                 }
-                data[index][3] = String.valueOf(settlementSelected.getSickPercent());
-                data[index][2] = settlementSelected.getRamzorColor().toString();
-                statsTable.repaint();
-                mainW.repaint();
             }
         });
         down.add(addSick);
@@ -172,11 +189,19 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                String set = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
-                int index = map.getSettlement(set);
-                String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
-                map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
-                data[statsTable.getSelectedRow()][4] = String.valueOf(map.getSettlements()[index].getGivenVaccineDose());
+               if (flag)
+               {
+                   String set = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
+                   int index = map.getSettlement(set);
+                   String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
+                   map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
+                   data[statsTable.getSelectedRow()][4] = String.valueOf(map.getSettlements()[index].getGivenVaccineDose());
+               }
+               else {
+                   JOptionPane.showMessageDialog(new JFrame(), "To add vaccine doses, go back to the original table with the option \"None\".");
+               }
+
+
             }
         });
 
