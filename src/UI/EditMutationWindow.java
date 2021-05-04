@@ -8,14 +8,18 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class EditMutationWindow extends JDialog {
+
     private String[] elements = {"British Variant", "Chinese Variant", "South Africa Variant"};
     private JTable editTab;
-    private class VariantModel extends AbstractTableModel {
+
+    private class VariantModel extends AbstractTableModel
+    {
         private IVirus[] virus;
         private final String[] columnNames = {"British Variant", "Chinese Variant", "South Africa Variant"};
         public VariantModel(IVirus[] data) {
             this.virus = data;
         }
+
 
         @Override
         public int getRowCount() {

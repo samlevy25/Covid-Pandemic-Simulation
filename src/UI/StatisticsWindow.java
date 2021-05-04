@@ -26,12 +26,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class StatisticsWindow extends JFrame {
-    private Map my_map;
-    private String[][] my_data;
-    JTable statsTable ;
+    private Map my_map; // the Map
+    private String[][] my_data; // all the map in a double string array
+    JTable statsTable ; // Table of my_data
     private String selectedComboBox;
     private TableRowSorter rs;
     private TableColumn selectedColumn = null ;
+
+    /**
+     * Constructor
+     * Initialization of all the graphical interface of all the data with the possibility of making simulations.
+     * @param map : The map
+     * @param mainWin : Panel of the graphical interface
+     */
     StatisticsWindow(Map map, JPanel mainWin) {
         super("Statistics");
         JPanel mainW = mainWin;
@@ -45,8 +52,12 @@ public class StatisticsWindow extends JFrame {
         TextField FilterText = new TextField("Filter");
         FilterText.addActionListener(new ActionListener()
         {
+            /**
+             * Filter of the data in the table
+             * @param e
+             */
             @Override
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(ActionEvent e) //
             {
                 rs.setRowFilter(RowFilter.regexFilter(FilterText.getText(), 0, selectedColumn.getModelIndex()));
             }
@@ -55,6 +66,10 @@ public class StatisticsWindow extends JFrame {
         JComboBox<String> colSelect = new JComboBox(elementComboBox);
         colSelect.addActionListener(new ActionListener()
         {
+            /**
+             * Give the index the element selectionned in the combo box .
+             * @param e
+             */
             @Override
             public void actionPerformed(ActionEvent e)
             {
@@ -120,6 +135,10 @@ public class StatisticsWindow extends JFrame {
         JButton addSick = new JButton("Add Sick");
         addSick.addActionListener(new ActionListener()
         {
+            /**
+             * Add sick in a settlement with a random virus
+             * @param e
+             */
             @Override
             public void actionPerformed(ActionEvent e)
             {
@@ -146,6 +165,10 @@ public class StatisticsWindow extends JFrame {
         JButton vaccinate = new JButton("Vaccinate");
         vaccinate.addActionListener(new ActionListener()
         {
+            /**
+             * Give number of dose of vaccine to a settlement
+             * @param e
+             */
             @Override
             public void actionPerformed(ActionEvent e)
             {
@@ -163,7 +186,10 @@ public class StatisticsWindow extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-
+    /**
+     * Save all the data modified bu add sick , vaccinate or simulation in CVS file
+     * @param actionEvent
+     */
     private void saveCSV(ActionEvent actionEvent) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -179,6 +205,9 @@ public class StatisticsWindow extends JFrame {
         }
     }
 
+    /**
+     * @return Table of the data
+     */
     public JTable getStatsTable() {
         return statsTable;
     }

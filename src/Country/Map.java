@@ -1,3 +1,7 @@
+/**
+ *  @creator : Jacob Elbaz , ID : 336068895
+ *  @creator : Samuel Elie Levy  , ID : 345112148
+ */
 package Country;
 
 import Population.Person;
@@ -12,11 +16,16 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Map {
+
     private final Settlement[] settlements;
-    private final IVirus[] virus;
+    private final IVirus[] virus; // Array of all virus variants.
     private final int size;
     private boolean state = false;
 
+    /**
+     * Constructor
+     * @param s : Array of Settlements.
+     */
     public Map(Settlement[] s) {
         size = s.length;
         settlements = new Settlement[size];
@@ -26,10 +35,18 @@ public class Map {
         virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()};
     }
 
+    /**
+     * @return : settlements (this)
+     */
     public Settlement[] getSettlements() {
         return settlements;
     }
 
+    /**
+     *  check all settlements and verify the index of "s".
+     * @param s : (String) Name of Settlement.
+     * @return : settlement's index in the Array of Settlements.
+     */
     public int getSettlement(String s) {
         for (int i = 0; i < size; i++) {
             if (settlements[i].getName().equals(s))
@@ -43,18 +60,31 @@ public class Map {
         return Arrays.toString(settlements);
     }
 
+    /**
+     * @return Array of all virus variants.
+     */
     public IVirus[] getVirus() {
         return virus;
     }
 
+    /**
+     * @return True if the simulation can run otherwise else
+     */
     public boolean runningSimulation(){
         return state;
     }
 
+    /**
+     * Change simulation's state.
+     * @param state : Simulation's state.
+     */
     public void setState(boolean state) {
         this.state = state;
     }
 
+    /**
+     * Simulation performed on settlements
+     */
     public void runSimulation() {
         //step one
         for (Settlement settlement : settlements) {
