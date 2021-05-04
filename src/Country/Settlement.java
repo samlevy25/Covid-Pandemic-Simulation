@@ -61,13 +61,7 @@ public abstract class Settlement
     }
 
     public double contagiousPercent() {
-        double count = 0;
-        for (Person person : people) {
-            if (person instanceof Sick) {
-                count++;
-            }
-        }
-        return count/people.size();
+        return numOfSicks()/(double) people.size();
     }
     public Point randomLocation() {
         int range_x = location.getPosition().getM_x() + location.getSize().getWidth();
@@ -166,12 +160,7 @@ public abstract class Settlement
     }
 
     public int numOfSicks() {
-        int count = 0;
-        for(int i = 0; i < getPeople().size(); i++) {
-            if(getPeople().get(i) instanceof Sick)
-                count++;
-        }
-        return count;
+        return sickPerson.size();
     }
 
     public RamzorColor getRamzorColor() {
@@ -180,7 +169,7 @@ public abstract class Settlement
 
     public double getSickPercent()
     {
-        return this.numOfSicks() / (double)getPeople().size();
+        return this.numOfSicks() / (double)people.size();
     }
 
     public int getDead()
@@ -190,12 +179,11 @@ public abstract class Settlement
 
     public int getGivenVaccineDose()
     {
-        int count = 0;
-        for(int i = 0; i < getPeople().size(); i++) {
-            if(getPeople().get(i) instanceof Vaccinated)
-                count++;
-        }
-        return count;
+        return numberVaccineDose;
+    }
+
+    public void setNumberVaccineDose(int numberVaccineDose) {
+        this.numberVaccineDose += numberVaccineDose;
     }
 
     public void setRamzorColor() {
@@ -221,22 +209,16 @@ public abstract class Settlement
         }
     }
 
-    public int getNumberVaccineDose() {
-        return numberVaccineDose;
-    }
-
     public List<Sick> getSickPerson() {
         return sickPerson;
     }
 
-    public void vaccinePopulation(){
-        while (numberVaccineDose != 0 && healthyPerson.size() != 0){
-            for (int j = 0; j < healthyPerson.size(); j++){
-                if (healthyPerson.get(j) instanceof Healthy){
-                    Vaccinated person = ((Healthy) healthyPerson.remove(j)).vaccinate();
-                    healthyPerson.add(person);
-                    numberVaccineDose--;
-                }
+    public void vaccinePopulation() {
+        for (int j = 0; j < healthyPerson.size(); j++) {
+            if (healthyPerson.get(j) instanceof Healthy && numberVaccineDose > 0) {
+                Vaccinated person = ((Healthy) healthyPerson.remove(j)).vaccinate();
+                healthyPerson.add(person);
+                numberVaccineDose--;
             }
         }
     }

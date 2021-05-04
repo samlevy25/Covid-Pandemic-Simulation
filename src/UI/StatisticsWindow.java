@@ -40,7 +40,7 @@ public class StatisticsWindow extends JFrame {
         contentPane.setLayout(new BorderLayout());
         Panel up = new Panel();
         up.setLayout(new BoxLayout(up, BoxLayout.LINE_AXIS));
-        String[] elements = {"Name", "Type", "RamzorColor", "Sick Percent", "Given Vaccine Dose", "Dead", "Current Population"};
+        String[] elements = {"Name", "Type", "RamzorColor", "Sick Percent", "Vaccine Dose", "Dead", "Current Population"};
         String[] elementComboBox ={ "None", "Name","Type","RamzorColor"};
         TextField FilterText = new TextField("Filter");
         FilterText.addActionListener(new ActionListener()
@@ -149,8 +149,11 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                String set = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
+                int index = map.getSettlement(set);
                 String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
-                data[statsTable.getSelectedRow()][4] = String.valueOf((Integer.parseInt(number)+Integer.parseInt(data[statsTable.getSelectedRow()][4])));
+                map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
+                data[statsTable.getSelectedRow()][4] = String.valueOf(map.getSettlements()[index].getGivenVaccineDose());
             }
         });
 
