@@ -1,3 +1,7 @@
+/**
+ *  @creator : Jacob Elbaz , ID : 336068895
+ *  @creator : Samuel Elie Levy  , ID : 345112148
+ */
 package IO;
 
 import Country.*;
@@ -9,10 +13,22 @@ import java.io.*;
 import java.util.*;
 
 public class SimulationFile {
-    private final String nameOfFile;
+
+    private final String nameOfFile; // file's name
+
+    /**
+     * Constructor
+     * @param n :  file"s name
+     */
     public SimulationFile(String n) {
         nameOfFile = n;
     }
+
+    /**
+     * read from file all map's informations , initializes the whole healthy population and gives them an age according to a mathematical formula (x and y)
+     * @return List of Settlements
+     * @throws IOException : if the file failed to be opened
+     */
     public List<Settlement> readFromFile() throws IOException {
         List<Settlement> settlementsList = new ArrayList<>();
         try {
