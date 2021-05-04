@@ -24,6 +24,8 @@ public class MainWindow extends JFrame {
     private PanelDrawing mapPanel;
     private boolean fileLoaded = false;
     private boolean closed = false;
+    private JButton[] buttons;
+    private JLabel[] labels;
 
     public MainWindow() {
         super("Main Window");
@@ -65,6 +67,7 @@ public class MainWindow extends JFrame {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
+            this.removeAll();
             for (int i = 0; i < myMap.getSettlements().length; i++){
                 Point p1 = myMap.getSettlements()[i].getLocation().getCenter();
                 for (int j = 0; j < myMap.getSettlements()[i].getNeighbours().length; j++){
@@ -171,8 +174,12 @@ public class MainWindow extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
                 else{
                     myMap.setState(false);
-                    myMap = null;
                     MainWindow.this.contentPane.remove(mapPanel);
+                    for(int i = 0; i< myMap.getSettlements().length; i++){
+                        MainWindow.this.remove(buttons[i]);
+                        MainWindow.this.remove(labels[i]);
+                    }
+                    myMap = null;
                     MainWindow.this.repaint();
                 }
             }
@@ -268,6 +275,8 @@ public class MainWindow extends JFrame {
             }
             myMap = new Map(s);
             fileLoaded = true;
+            buttons = new JButton[myMap.getSettlements().length];
+            labels = new JLabel[myMap.getSettlements().length];
             mapPanel = new PanelDrawing();
             for (int i = 0; i < myMap.getSettlements().length; i++){
                 JLabel name = new JLabel(myMap.getSettlements()[i].getName());
@@ -291,6 +300,9 @@ public class MainWindow extends JFrame {
                 int height = myMap.getSettlements()[i].getLocation().getSize().getHeight();
                 name.setBounds(x+2, y,100 ,height);
                 button.setBounds(x, y, width, height);
+
+                buttons[i] = button;
+                labels[i] = name;
                 this.add(button);
                 this.add(name);
             }

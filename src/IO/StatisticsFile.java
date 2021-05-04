@@ -25,21 +25,19 @@ public class StatisticsFile
      */
     public void writeInCvs( String[][] saveData) throws IOException {
         try {
-            FileWriter fw = new FileWriter(nameOfFile);
-            PrintWriter pw = new PrintWriter(fw);
+            String header = "Name,Type,RamzorColor,Sick Percent,Vaccine Dose,Dead,Current Population";
+            PrintWriter pw = new PrintWriter(nameOfFile + ".csv");
+            pw.write(header);
 
-            for (int i = 0 ; i < saveData.length ; i++)
-            {
-                for (int j = 0; j < saveData[i].length ; j++)
-                {
-                    pw.append(saveData[i][j]);
-                   if (!saveData[i][j].equals(saveData[i][saveData[i].length - 1]))
-                       pw.append(";");
+            for (String[] saveDatum : saveData) {
+                StringBuilder row = new StringBuilder();
+                for (String s : saveDatum) {
+                    row.append(s).append(",");
                 }
-                pw.println("");
+                row.append("\n");
+                pw.write(row.toString());
             }
             pw.close();
-            fw.close();
         }
         catch (FileNotFoundException e)
         {

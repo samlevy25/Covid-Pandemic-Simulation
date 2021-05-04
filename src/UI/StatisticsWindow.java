@@ -23,6 +23,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class StatisticsWindow extends JFrame {
     private Map my_map;
@@ -36,8 +37,7 @@ public class StatisticsWindow extends JFrame {
         JPanel mainW = mainWin;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         my_map = map;
-        JPanel contentPane = (JPanel) this.getContentPane();
-        contentPane.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
         Panel up = new Panel();
         up.setLayout(new BoxLayout(up, BoxLayout.LINE_AXIS));
         String[] elements = {"Name", "Type", "RamzorColor", "Sick Percent", "Vaccine Dose", "Dead", "Current Population"};
@@ -89,7 +89,7 @@ public class StatisticsWindow extends JFrame {
 
         up.add(colSelect);
         up.add(FilterText);
-        contentPane.add(up, BorderLayout.PAGE_START);
+        this.add(up, BorderLayout.PAGE_START);
 
 
         String[][] data = new String[map.getSettlements().length][7];
@@ -110,7 +110,7 @@ public class StatisticsWindow extends JFrame {
         JScrollPane js = new JScrollPane(statsTable);
 
         //table.setValueAt("aa", 0, 0);
-        contentPane.add(js);
+        this.add(js);
 
         Panel down = new Panel();
         down.setLayout(new GridLayout(1,3));
@@ -158,10 +158,11 @@ public class StatisticsWindow extends JFrame {
         });
 
         down.add(vaccinate);
-        contentPane.add(down, BorderLayout.PAGE_END);
+        this.add(down, BorderLayout.PAGE_END);
         this.pack();
         this.setLocationRelativeTo(null);
     }
+
 
     private void saveCSV(ActionEvent actionEvent) {
         JFileChooser fileChooser = new JFileChooser();
