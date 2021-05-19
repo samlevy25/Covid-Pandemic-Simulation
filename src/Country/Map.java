@@ -88,15 +88,11 @@ public class Map {
     public void runSimulation() {
         //step one
         for (Settlement settlement : settlements) {
-            int percent = (int) (settlement.getHealthyPerson().size() * 0.2);
+            int percent = (int) Math.floor(settlement.getSickPerson().size() * 0.2);
+            //step two
+            IVirus virus;
+
             for (int j = 0; j < percent; j++) {
-                settlement.isSick(settlement.getHealthyPerson().get(j), Main.randomVirus(this));
-            }
-        }
-        //step two
-        IVirus virus;
-        for (Settlement settlement : settlements) {
-            for (int j = 0; j < settlement.getSickPerson().size(); j++) {
                 int k = 0;
                 while (k < 3 && settlement.getHealthyPerson().size() > 0) { // Pick 3 random healthy person and try to contagion them
                     int rand = new Random().nextInt(settlement.getHealthyPerson().size());

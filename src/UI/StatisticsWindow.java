@@ -94,7 +94,6 @@ public class StatisticsWindow extends JFrame {
                     {
 
                         flag= false;
-                        System.out.println(flag);
                         selectedColumn = StatisticsWindow.this.statsTable.getColumnModel().getColumn(0);
                         break;
                     }
@@ -165,7 +164,7 @@ public class StatisticsWindow extends JFrame {
                     int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
 
                     for (int i = 0; i < numberOfSick; i++) {
-                        Healthy currentHealthy = (Healthy) settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                        Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                         settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
                     }
                     data[index][3] = String.valueOf(settlementSelected.getSickPercent());
