@@ -109,18 +109,8 @@ public class StatisticsWindow extends JFrame {
         this.add(up, BorderLayout.PAGE_START);
 
 
-        String[][] data = new String[map.getSettlements().length][7];
-        for(int i = 0; i < data.length; i++) {
-            data[i][0] = map.getSettlements()[i].getName();
-            data[i][1] = map.getSettlements()[i].getClass().getSimpleName();
-            data[i][2] = map.getSettlements()[i].getRamzorColor().toString();
-            data[i][3] = String.valueOf(map.getSettlements()[i].getSickPercent());
-            data[i][4] = String.valueOf(map.getSettlements()[i].getGivenVaccineDose());
-            data[i][5] = String.valueOf(map.getSettlements()[i].getDead());
-            data[i][6] = String.valueOf(map.getSettlements()[i].getPeople().size());
-        }
-        my_data = data;
-        statsTable = new JTable(data, elements);
+
+        statsTable = new JTable(new StatModel(map.getSettlements()));
         rs = new TableRowSorter<>(statsTable.getModel());
         statsTable.setRowSorter(rs);
         statsTable.getTableHeader().setReorderingAllowed(false);
@@ -156,8 +146,6 @@ public class StatisticsWindow extends JFrame {
                         Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
                         settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
                     }
-                    data[index][3] = String.valueOf(settlementSelected.getSickPercent());
-                    data[index][2] = settlementSelected.getRamzorColor().toString();
                     statsTable.repaint();
                     mainW.repaint();
                 }else
@@ -183,7 +171,6 @@ public class StatisticsWindow extends JFrame {
                    int index = map.getSettlement(set);
                    String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
                    map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
-                   data[statsTable.getSelectedRow()][4] = String.valueOf(map.getSettlements()[index].getGivenVaccineDose());
                }
                else {
                    JOptionPane.showMessageDialog(new JFrame(), "To add vaccine doses, go back to the original table with the option \"None\".");

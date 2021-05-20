@@ -1,6 +1,5 @@
 package UI;
 import Country.Map;
-import Country.Settlement;
 import IO.SimulationFile;
 import Location.Point;
 import Simulation.Clock;
@@ -23,6 +22,7 @@ public class MainWindow extends JFrame {
     private boolean closed = false;
     private JButton[] buttons;
     private JLabel[] labels;
+    private StatisticsWindow statWindow;
 
     public MainWindow() {
         super("Main Window");
@@ -34,7 +34,6 @@ public class MainWindow extends JFrame {
 
         contentPane = (JPanel) this.getContentPane();
         contentPane.setLayout(new BorderLayout());
-
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50); // Add the Slider
         slider.setMinorTickSpacing(1);
         slider.setMajorTickSpacing(10);
@@ -58,6 +57,10 @@ public class MainWindow extends JFrame {
 
     public Map getMap() {
         return myMap;
+    }
+
+    public StatisticsWindow getStatWindow() {
+        return statWindow;
     }
 
     private class PanelDrawing extends JPanel {
@@ -102,7 +105,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (fileLoaded){
-                StatisticsWindow statWindow = new StatisticsWindow(myMap, contentPane);
+                statWindow = new StatisticsWindow(myMap, contentPane);
                 statWindow.setVisible(true);
             }
                 else {

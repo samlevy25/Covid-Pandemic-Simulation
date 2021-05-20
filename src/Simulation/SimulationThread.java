@@ -1,8 +1,8 @@
 package Simulation;
 
-import Country.Map;
 import Country.Settlement;
 
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 public class SimulationThread implements Runnable{
@@ -16,5 +16,10 @@ public class SimulationThread implements Runnable{
     @Override
     public void run() {
         settlement.runSimulation();
+        try{
+            barrier.await();
+        }catch (InterruptedException | BrokenBarrierException e){
+            e.printStackTrace();
+        }
     }
 }

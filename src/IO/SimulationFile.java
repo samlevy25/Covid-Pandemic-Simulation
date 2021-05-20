@@ -17,7 +17,6 @@ public class SimulationFile {
 
     private final String nameOfFile; // file's name
     private Map map;
-
     /**
      * Constructor
      * @param n :  file"s name
@@ -105,7 +104,6 @@ public class SimulationFile {
             System.exit(-1);
         }
         map = new Map(settlementsList.toArray(new Settlement[0]));
-
         return map;
     }
 
