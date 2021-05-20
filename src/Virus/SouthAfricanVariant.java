@@ -1,6 +1,7 @@
 package Virus;
 
 import Country.Map;
+import Country.Settlement;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
@@ -97,7 +98,7 @@ public class SouthAfricanVariant implements IVirus {
      * @return : Variant virus
      */
     @Override
-    public IVirus getRandomVariant(Map map) {
+    public IVirus getRandomVariant(Settlement map) {
         int i;
         do {
             i = new Random().nextInt(3);

@@ -264,13 +264,11 @@ public class MainWindow extends JFrame {
         if (result == JFileChooser.APPROVE_OPTION) {
             String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
             SimulationFile myFile = new SimulationFile(selectedFile);
-            Settlement[] s = new Settlement[0];
             try {
-                s = myFile.readFromFile().toArray(new Settlement[0]);
+                myMap = myFile.readFromFile();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
-            myMap = new Map(s);
             fileLoaded = true;
             buttons = new JButton[myMap.getSettlements().length];
             labels = new JLabel[myMap.getSettlements().length];

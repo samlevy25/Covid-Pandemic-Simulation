@@ -1,6 +1,7 @@
 package Virus;
 
 import Country.Map;
+import Country.Settlement;
 import Population.Person;
 import Population.Sick;
 
@@ -46,5 +47,5 @@ public interface IVirus {
      * @param map : The map
      * @return : Variant virus
      */
-    IVirus getRandomVariant(Map map);
+    IVirus getRandomVariant(Settlement settlement);
 }

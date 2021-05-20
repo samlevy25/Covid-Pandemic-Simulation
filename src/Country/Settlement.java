@@ -8,7 +8,11 @@ import Location.Location;
 import Location.Point;
 import Population.*;
 import Simulation.Clock;
+import Simulation.Main;
+import Virus.BritishVariant;
+import Virus.ChineseVariant;
 import Virus.IVirus;
+import Virus.SouthAfricanVariant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +32,7 @@ public abstract class Settlement
     private List<Sick> sickPerson; // List of sick people in the settlement
     private List<Person> healthyPerson; // List of healthy people in the settlement
     private int numOfDead; //  number of dead in the settlement
+    private final IVirus[] virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()}; // Array of all virus variants.
 
     /**
      * Constructor
@@ -114,6 +119,9 @@ public abstract class Settlement
         }
     }
 
+    public IVirus[] getVirus() {
+        return virus;
+    }
     /**
      * Remove the dead person from the settlement list and also from the sick list and increase the death count by 1.
      * @param miskine1 : Dead person
@@ -302,6 +310,41 @@ public abstract class Settlement
                 people.addAll(sickPerson);
             }
         }
+    }
+    public void simulation_1(){
+        int percent = (int) Math.floor(getSickPerson().size() * 0.2);
+        IVirus virus;
+
+        for (int j = 0; j < percent; j++) {
+            int k = 0;
+            while (k < 3 && getHealthyPerson().size() > 0) { // Pick 3 random healthy person and try to contagion them
+                int rand = new Random().nextInt(getHealthyPerson().size());
+                k++;
+                virus = getSickPerson().get(j).getVirus();
+                if (virus.tryToContagion(getSickPerson().get(j), getHealthyPerson().get(rand))) {
+                    isSick(getHealthyPerson().get(rand), virus.getRandomVariant(this));
+                }
+            }
+        }
+    }
+    public void simulation_2(){
+        checkConvalescents();
+    }
+    public void simulation_3() {
+        Person p = null;
+        for (int j = 0; j < getPeople().size() * 0.03; j++)
+            p = getPeople().get(j);
+        transferPerson(p, settlementConnected[new Random().nextInt(settlementConnected.length)]);
+    }
+    public void simulation_4(){
+        vaccinePopulation();
+    }
+
+    public void runSimulation(){
+        simulation_1();
+        simulation_2();
+        simulation_3();
+        simulation_4();
     }
 
     /**

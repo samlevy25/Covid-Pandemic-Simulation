@@ -5,6 +5,7 @@
 package IO;
 
 import Country.*;
+import Country.Map;
 import Location.*;
 import Population.Healthy;
 import Population.Person;
@@ -15,6 +16,7 @@ import java.util.*;
 public class SimulationFile {
 
     private final String nameOfFile; // file's name
+    private Map map;
 
     /**
      * Constructor
@@ -29,7 +31,7 @@ public class SimulationFile {
      * @return List of Settlements
      * @throws IOException : if the file failed to be opened
      */
-    public List<Settlement> readFromFile() throws IOException {
+    public Map readFromFile() throws IOException {
         List<Settlement> settlementsList = new ArrayList<>();
         try {
 
@@ -102,7 +104,9 @@ public class SimulationFile {
             System.out.println("File not found");
             System.exit(-1);
         }
-        return settlementsList;
+        map = new Map(settlementsList.toArray(new Settlement[0]));
+
+        return map;
     }
 
     @Override

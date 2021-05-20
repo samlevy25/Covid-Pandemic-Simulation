@@ -88,7 +88,6 @@ public class Map {
         //step one
         for (Settlement settlement : settlements) {
             int percent = (int) Math.floor(settlement.getSickPerson().size() * 0.2);
-            //step two
             IVirus virus;
 
             for (int j = 0; j < percent; j++) {
@@ -98,7 +97,7 @@ public class Map {
                     k++;
                     virus = settlement.getSickPerson().get(j).getVirus();
                     if (virus.tryToContagion(settlement.getSickPerson().get(j), settlement.getHealthyPerson().get(rand))) {
-                        settlement.isSick(settlement.getHealthyPerson().get(rand), virus.getRandomVariant(this));
+                        settlement.isSick(settlement.getHealthyPerson().get(rand), virus.getRandomVariant(settlement));
                     }
                 }
             }
@@ -106,14 +105,14 @@ public class Map {
         for (Settlement settlement : settlements) {
             settlement.checkConvalescents();
         }
-        //step three
+        //step two
         Person p = null;
         for (int i = 0; i < settlements.length; i++) {
             for (int j = 0; j < settlements[i].getPeople().size()*0.03; j++)
                 p = settlements[i].getPeople().get(j);
             settlements[i].transferPerson(p, settlements[Main.exclusiveRandom(size, i)]);
         }
-        //step four
+        //step three
         for (Settlement settlement : settlements) {
             settlement.vaccinePopulation();
         }

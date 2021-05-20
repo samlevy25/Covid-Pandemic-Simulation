@@ -50,9 +50,8 @@ public class Main {
 
         while(!mainWindow.isClosed())
         {
-            Clock.nextTick();
             if(map.runningSimulation()) {
-
+                Clock.nextTick();
                 map.runSimulation();
                 mainWindow.pack();
             }
