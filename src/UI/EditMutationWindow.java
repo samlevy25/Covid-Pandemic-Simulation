@@ -4,13 +4,11 @@ import Virus.IVirus;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 public class EditMutationWindow extends JDialog {
 
     private String[] elements = {"British Variant", "Chinese Variant", "South Africa Variant"};
-    private JTable editTab;
 
     private class VariantModel extends AbstractTableModel
     {

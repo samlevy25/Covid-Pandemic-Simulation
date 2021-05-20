@@ -6,18 +6,10 @@
 package Simulation;
 
 import Country.Map;
-import Country.Settlement;
-import IO.SimulationFile;
-import Population.Healthy;
-import Population.Person;
-import Population.Sick;
-import Population.Vaccinated;
 import UI.MainWindow;
 import Virus.*;
 
-import java.io.IOException;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
     /**

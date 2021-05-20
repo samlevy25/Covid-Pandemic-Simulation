@@ -5,7 +5,6 @@
 package Country;
 
 import Population.Person;
-import Population.Sick;
 import Simulation.Main;
 import Virus.BritishVariant;
 import Virus.ChineseVariant;

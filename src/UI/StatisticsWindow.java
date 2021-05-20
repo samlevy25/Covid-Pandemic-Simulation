@@ -3,19 +3,10 @@ package UI;
 import Country.Map;
 import Country.Settlement;
 import IO.StatisticsFile;
-import Population.Healthy;
 import Population.Person;
-import Population.Sick;
-import Simulation.Clock;
 import Simulation.Main;
-import Virus.BritishVariant;
-import Virus.ChineseVariant;
-import Virus.IVirus;
-import Virus.SouthAfricanVariant;
-import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
@@ -23,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class StatisticsWindow extends JFrame {
     private Map my_map; // the Map
@@ -136,7 +126,6 @@ public class StatisticsWindow extends JFrame {
         statsTable.getTableHeader().setReorderingAllowed(false);
         JScrollPane js = new JScrollPane(statsTable);
 
-        //table.setValueAt("aa", 0, 0);
         this.add(js);
 
         Panel down = new Panel();

@@ -6,7 +6,6 @@ package Population;
 
 import Country.Settlement;
 import Location.Point;
-import Simulation.Clock;
 import Virus.IVirus;
 
 public class Sick extends Person {
