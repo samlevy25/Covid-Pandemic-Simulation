@@ -143,13 +143,8 @@ public class MainWindow extends JFrame {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fileLoaded) {
-                    try {
-                        myMap.setState(true);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
-                }
+                if(fileLoaded)
+                    myMap.setState(true);
                 else {
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Play Error",
                             JOptionPane.ERROR_MESSAGE);
@@ -166,13 +161,8 @@ public class MainWindow extends JFrame {
                 else if(!myMap.runningSimulation())
                     JOptionPane.showMessageDialog(new JFrame(), "There is no running simulation.", "Pause Error",
                             JOptionPane.ERROR_MESSAGE);
-                else {
-                    try {
-                        myMap.setState(false);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
-                }
+                else
+                    myMap.setState(false);
             }
         });
         JMenuItem stop = new JMenuItem("Stop");
@@ -183,11 +173,7 @@ public class MainWindow extends JFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Stop Error",
                             JOptionPane.ERROR_MESSAGE);
                 else{
-                    try {
-                        myMap.setState(false);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
+                    myMap.setState(false);
                     MainWindow.this.contentPane.remove(mapPanel);
                     for(int i = 0; i< myMap.getSettlements().length; i++){
                         MainWindow.this.remove(buttons[i]);
@@ -299,9 +285,9 @@ public class MainWindow extends JFrame {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        StatisticsWindow window = new StatisticsWindow(myMap, contentPane);
-                        window.getStatsTable().setRowSelectionInterval(finalI, finalI);
-                        window.setVisible(true);
+                        statWindow = new StatisticsWindow(myMap, contentPane);
+                        statWindow.getStatsTable().setRowSelectionInterval(finalI, finalI);
+                        statWindow.setVisible(true);
                     }
                 });
 

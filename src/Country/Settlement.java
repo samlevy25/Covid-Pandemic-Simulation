@@ -124,26 +124,26 @@ public abstract class Settlement
     }
     /**
      * Remove the dead person from the settlement list and also from the sick list and increase the death count by 1.
-     * @param miskine1 : Dead person
+     * @param sick : Dead person
      */
-    public void isDead(Sick miskine1)
+    public void isDead(Sick sick)
     {
-        this.people.remove(miskine1);
-        this.sickPerson.remove(miskine1);
+        this.people.remove(sick);
+        this.sickPerson.remove(sick);
         numOfDead++;
     }
 
     /**
      * Remove the person from the Healthy list of the settlement also from the list of everyone at the settlement.
      * The person becomes sick, they are added to the list of people who are in the settlement and also that of sicks.
-     * @param miskine2 : The person who becomes sick.
+     * @param person : The person who becomes sick.
      * @param v :  Person's virus
      */
-    public void isSick(Person miskine2, IVirus v)
+    public void isSick(Person person, IVirus v)
     {
-        healthyPerson.remove(miskine2);
-        people.remove(miskine2);
-        Sick newSick = (Sick) miskine2.contagion(v);
+        healthyPerson.remove(person);
+        people.remove(person);
+        Sick newSick = (Sick) person.contagion(v);
         sickPerson.add(newSick);
         people.add(newSick);
     }
@@ -304,10 +304,11 @@ public abstract class Settlement
     public void checkConvalescents() {
         for (int i = 0; i < sickPerson.size(); i++) {
             if ((Clock.now() - sickPerson.get(i).getContagiousTime())/Clock.getTicks_per_day() > 25){
+                Sick sick = sickPerson.get(i);
+                people.remove(sick);
                 Convalescent convalescent = sickPerson.remove(i).recover();
                 healthyPerson.add(convalescent);
-                people = new ArrayList<Person>(healthyPerson);
-                people.addAll(sickPerson);
+                people.add(convalescent);
             }
         }
     }
@@ -339,12 +340,21 @@ public abstract class Settlement
     public synchronized void simulation_4(){
         vaccinePopulation();
     }
+    
+    public synchronized void simulation_5(){
+        for (Sick person : sickPerson) {
+            if (person.tryToDie()) {
+                this.isDead(person);
+            }
+        }
+    }
 
     public synchronized void runSimulation(){
         simulation_1();
         simulation_2();
         simulation_3();
         simulation_4();
+        simulation_5();
     }
 
     /**

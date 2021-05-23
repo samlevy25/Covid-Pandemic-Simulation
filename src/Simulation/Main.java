@@ -46,7 +46,8 @@ public class Main {
 
         }while(!mainWindow.hasFileLoaded());
 
-        mainWindow.getMap().setState(false);
+
+
         while(!mainWindow.isClosed()) {
             Map map = mainWindow.getMap();
             System.out.println("");
