@@ -92,8 +92,16 @@ public class Map {
      *
      * @param state : Simulation's state.
      */
-    public void setState(boolean state) {
+    public void setState(boolean state) throws InterruptedException {
         this.state = state;
+        if(state)
+            synchronized (this){
+            this.notifyAll();
+            }
+        else
+            synchronized (this){
+            this.wait();
+            }
     }
 
     /**

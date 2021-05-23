@@ -311,7 +311,7 @@ public abstract class Settlement
             }
         }
     }
-    public void simulation_1(){
+    public synchronized void simulation_1(){
         int percent = (int) Math.floor(getSickPerson().size() * 0.2);
         IVirus virus;
 
@@ -327,20 +327,20 @@ public abstract class Settlement
             }
         }
     }
-    public void simulation_2(){
+    public synchronized void simulation_2(){
         checkConvalescents();
     }
-    public void simulation_3() {
+    public synchronized void simulation_3() {
         Person p = null;
         for (int j = 0; j < getPeople().size() * 0.03; j++)
             p = getPeople().get(j);
         transferPerson(p, settlementConnected[new Random().nextInt(settlementConnected.length)]);
     }
-    public void simulation_4(){
+    public synchronized void simulation_4(){
         vaccinePopulation();
     }
 
-    public void runSimulation(){
+    public synchronized void runSimulation(){
         simulation_1();
         simulation_2();
         simulation_3();

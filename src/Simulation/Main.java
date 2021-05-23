@@ -46,19 +46,16 @@ public class Main {
 
         }while(!mainWindow.hasFileLoaded());
 
-
-
-        while(!mainWindow.isClosed())
-        {
+        mainWindow.getMap().setState(false);
+        while(!mainWindow.isClosed()) {
             Map map = mainWindow.getMap();
             System.out.println("");
-            if(map.runningSimulation()) {
-                Clock.nextTick();
-                map.runSimulation();
-                if(mainWindow.getStatWindow() != null)
-                    mainWindow.getStatWindow().getStatsTable().repaint();
-                mainWindow.pack();
-            }
+            Clock.nextTick();
+            map.runSimulation();
+            if (mainWindow.getStatWindow() != null)
+                mainWindow.getStatWindow().getStatsTable().repaint();
+            mainWindow.pack();
+
         }
     }
 }

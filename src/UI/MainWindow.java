@@ -143,8 +143,13 @@ public class MainWindow extends JFrame {
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fileLoaded)
-                    myMap.setState(true);
+                if(fileLoaded) {
+                    try {
+                        myMap.setState(true);
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+                }
                 else {
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Play Error",
                             JOptionPane.ERROR_MESSAGE);
@@ -161,8 +166,13 @@ public class MainWindow extends JFrame {
                 else if(!myMap.runningSimulation())
                     JOptionPane.showMessageDialog(new JFrame(), "There is no running simulation.", "Pause Error",
                             JOptionPane.ERROR_MESSAGE);
-                else
-                    myMap.setState(false);
+                else {
+                    try {
+                        myMap.setState(false);
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
+                }
             }
         });
         JMenuItem stop = new JMenuItem("Stop");
@@ -173,13 +183,16 @@ public class MainWindow extends JFrame {
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Stop Error",
                             JOptionPane.ERROR_MESSAGE);
                 else{
-                    myMap.setState(false);
+                    try {
+                        myMap.setState(false);
+                    } catch (InterruptedException interruptedException) {
+                        interruptedException.printStackTrace();
+                    }
                     MainWindow.this.contentPane.remove(mapPanel);
                     for(int i = 0; i< myMap.getSettlements().length; i++){
                         MainWindow.this.remove(buttons[i]);
                         MainWindow.this.remove(labels[i]);
                     }
-                    myMap = null;
                     MainWindow.this.repaint();
                 }
             }
