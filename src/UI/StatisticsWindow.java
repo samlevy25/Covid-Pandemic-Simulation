@@ -17,7 +17,6 @@ import java.io.IOException;
 
 public class StatisticsWindow extends JFrame {
     private Map my_map; // the Map
-    private String[][] my_data; // all the map in a double string array
     JTable statsTable ; // Table of my_data
     private String selectedComboBox;
     private TableRowSorter rs;
@@ -55,7 +54,8 @@ public class StatisticsWindow extends JFrame {
 
             }
 
-        });
+        }
+        );
 
         JComboBox<String> colSelect = new JComboBox(elementComboBox);
         colSelect.addActionListener(new ActionListener()
@@ -198,7 +198,7 @@ public class StatisticsWindow extends JFrame {
             String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
             StatisticsFile statisticsFile = new StatisticsFile(selectedFile);
             try{
-            statisticsFile.writeInCvs(my_data);
+            statisticsFile.writeInCvs(my_map.getSettlements());
         }catch(IOException ioException){
                 ioException.printStackTrace();
             }

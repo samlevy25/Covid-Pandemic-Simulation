@@ -1,6 +1,8 @@
 package UI;
 import Country.Map;
 import IO.SimulationFile;
+import IO.SituationFile;
+import IO.StatisticsFile;
 import Location.Point;
 import Simulation.Clock;
 
@@ -125,6 +127,8 @@ public class MainWindow extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
             }
         });
+        JMenuItem createLogFile = new JMenuItem("Create Log File...");
+        createLogFile.addActionListener(this::logListener);
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(new ActionListener() {
             @Override
@@ -136,6 +140,7 @@ public class MainWindow extends JFrame {
         fileMenu.add(load);
         fileMenu.add(statistics);
         fileMenu.add(editMutations);
+        fileMenu.add(createLogFile);
         fileMenu.add(exit);
 
         JMenu simulationMenu = new JMenu("Simulation");
@@ -305,6 +310,20 @@ public class MainWindow extends JFrame {
             }
             contentPane.add(mapPanel, BorderLayout.CENTER);
             this.pack();
+        }
+    }
+
+    private void logListener(ActionEvent e){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
+            try {
+                SituationFile.initialize(selectedFile);
+            }catch(IOException ioException){
+                ioException.printStackTrace();
+            }
         }
     }
 }

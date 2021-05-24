@@ -4,11 +4,11 @@
  */
 package Country;
 
+import IO.SituationFile;
 import Location.Location;
 import Location.Point;
 import Population.*;
 import Simulation.Clock;
-import Simulation.Main;
 import Virus.BritishVariant;
 import Virus.ChineseVariant;
 import Virus.IVirus;
@@ -32,6 +32,7 @@ public abstract class Settlement
     private List<Sick> sickPerson; // List of sick people in the settlement
     private List<Person> healthyPerson; // List of healthy people in the settlement
     private int numOfDead; //  number of dead in the settlement
+    private int newNumOfDead = 0;
     private final IVirus[] virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()}; // Array of all virus variants.
 
     /**
@@ -345,6 +346,11 @@ public abstract class Settlement
         for (Sick person : sickPerson) {
             if (person.tryToDie()) {
                 this.isDead(person);
+                newNumOfDead++;
+                if(newNumOfDead >= people.size()/100 && SituationFile.getInstance() != null){
+                    newNumOfDead = 0;
+                    SituationFile.writeToLog(this);
+                }
             }
         }
     }

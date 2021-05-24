@@ -50,7 +50,6 @@ public class Main {
 
         while(!mainWindow.isClosed()) {
             Map map = mainWindow.getMap();
-            System.out.println("");
             Clock.nextTick();
             map.runSimulation();
             if (mainWindow.getStatWindow() != null)
