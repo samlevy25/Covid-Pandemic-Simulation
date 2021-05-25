@@ -125,19 +125,25 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selection = statsTable.getSelectedRow();
-                int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
-                String str = (String) statsTable.getModel().getValueAt(modelIndex, 0);
-                int index = map.getSettlement(str);
-                Settlement settlementSelected = map.getSettlements()[index];
+                if(selection != -1) {
+                    int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
+                    String str = (String) statsTable.getModel().getValueAt(modelIndex, 0);
+                    int index = map.getSettlement(str);
+                    Settlement settlementSelected = map.getSettlements()[index];
 
-                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
+                    int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
 
-                for (int i = 0; i < numberOfSick; i++) {
-                    Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                    settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
+                    for (int i = 0; i < numberOfSick; i++) {
+                        Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                        settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
+                    }
+                    statsTable.repaint();
+                    mainW.repaint();
                 }
-                statsTable.repaint();
-                mainW.repaint();
+                else{
+                    JOptionPane.showMessageDialog(new JFrame(), "Select a row!", "Statistics Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
         down.add(addSick);
@@ -151,11 +157,16 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selection = statsTable.getSelectedRow();
-                int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
-                String set = (String) statsTable.getModel().getValueAt(modelIndex, 0);
-                int index = map.getSettlement(set);
-                String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
-                map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
+                if (selection != -1) {
+                    int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
+                    String set = (String) statsTable.getModel().getValueAt(modelIndex, 0);
+                    int index = map.getSettlement(set);
+                    String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
+                    map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
+                }
+                else
+                    JOptionPane.showMessageDialog(new JFrame(), "Select a row!", "Statistics Error",
+                            JOptionPane.ERROR_MESSAGE);
             }
         });
 

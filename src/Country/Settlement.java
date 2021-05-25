@@ -115,7 +115,6 @@ public abstract class Settlement
             return true;
         }
         else{
-            System.out.println("The person cannot be added/transferred in the settlement");
             return false;
         }
     }
@@ -156,20 +155,30 @@ public abstract class Settlement
      * @return Return True if the transfer was successful otherwise False.
      */
     public boolean transferPerson(Person person, Settlement newPlace) {
-
-        double stat = newPlace.getRamzorColor().percent * getRamzorColor().percent;
-        float i = new Random().nextFloat();
-        if (i < stat && newPlace.addPerson(person)) {
-            people.remove(person);
-            if (person instanceof Sick)
-                sickPerson.remove(person);
-            else
-                healthyPerson.remove(person);
-
-            return true;
+        Settlement me = this;
+        Settlement newP = newPlace;
+        if(newP.hashCode() > me.hashCode()){
+            me = newPlace;
+            newP = this;
         }
-        else
-            return false;
+
+        synchronized (me){
+            synchronized (newP){
+                double stat = newPlace.getRamzorColor().percent * getRamzorColor().percent;
+                float i = new Random().nextFloat();
+                if (i < stat && newPlace.addPerson(person)) {
+                    people.remove(person);
+                    if (person instanceof Sick)
+                        sickPerson.remove(person);
+                    else
+                        healthyPerson.remove(person);
+
+                    return true;
+                }
+                else
+                    return false;
+            }
+        }
     }
 
     /**
@@ -332,11 +341,14 @@ public abstract class Settlement
     public synchronized void simulation_2(){
         checkConvalescents();
     }
-    public synchronized void simulation_3() {
-        Person p = null;
-        for (int j = 0; j < getPeople().size() * 0.03; j++)
-            p = getPeople().get(j);
-        transferPerson(p, settlementConnected[new Random().nextInt(settlementConnected.length)]);
+    public void simulation_3() {
+        if (settlementConnected.length > 0) {
+            Person p;
+            for (int j = 0; j < getPeople().size() * 0.03; j++) {
+                p = getPeople().get(j);
+                transferPerson(p, settlementConnected[new Random().nextInt(settlementConnected.length)]);
+            }
+        }
     }
     public synchronized void simulation_4(){
         vaccinePopulation();
@@ -355,7 +367,7 @@ public abstract class Settlement
         }
     }
 
-    public synchronized void runSimulation(){
+    public void runSimulation(){
         simulation_1();
         simulation_2();
         simulation_3();

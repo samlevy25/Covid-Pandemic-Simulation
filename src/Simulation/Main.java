@@ -21,20 +21,6 @@ public class Main {
         return map.getVirus()[new Random().nextInt(3)];
     }
 
-    /**
-     * Returns a random number that is not the same as "i"
-     * @param bound :  the bound
-     * @param i : Number
-     * @return random number
-     */
-    public static int exclusiveRandom(int bound, int i) {
-        int rand;
-        do {
-            rand = new Random().nextInt(bound);
-        } while (rand == i);
-        return rand;
-    }
-
 
     public static void main(String[] args) throws InterruptedException
     {
@@ -48,14 +34,21 @@ public class Main {
 
 
 
-        while(!mainWindow.isClosed()) {
-            Map map = mainWindow.getMap();
-            Clock.nextTick();
-            map.runSimulation();
-            if (mainWindow.getStatWindow() != null)
-                mainWindow.getStatWindow().getStatsTable().repaint();
-            mainWindow.pack();
+        Map map = mainWindow.getMap();
+        synchronized (map) {
+            while (!mainWindow.isClosed()) {
 
+                if (map.runningSimulation()) {
+                    map = mainWindow.getMap();
+                    Clock.nextTick();
+                    map.runSimulation();
+                    if (mainWindow.getStatWindow() != null)
+                        mainWindow.getStatWindow().getStatsTable().repaint();
+                    mainWindow.pack();
+                }
+                else
+                    map.wait();
+            }
         }
     }
 }

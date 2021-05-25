@@ -96,7 +96,7 @@ public class Map {
         this.state = state;
         if(state)
             synchronized (this){
-            this.notifyAll();
+            this.notify();
             }
     }
 
