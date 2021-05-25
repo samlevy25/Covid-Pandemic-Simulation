@@ -8,6 +8,7 @@ import Simulation.Main;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,9 +18,9 @@ import java.io.IOException;
 
 public class StatisticsWindow extends JFrame {
     private Map my_map; // the Map
-    JTable statsTable ; // Table of my_data
+    private JTable statsTable ; // Table of my_data
     private String selectedComboBox;
-    private TableRowSorter rs;
+    private TableRowSorter<TableModel> rs;
     private TableColumn selectedColumn = null ;
     private boolean flag = true;
 
@@ -37,8 +38,12 @@ public class StatisticsWindow extends JFrame {
         this.setLayout(new BorderLayout());
         Panel up = new Panel();
         up.setLayout(new BoxLayout(up, BoxLayout.LINE_AXIS));
-        String[] elements = {"Name", "Type", "RamzorColor", "Sick Percent", "Vaccine Dose", "Dead", "Current Population"};
         String[] elementComboBox ={ "None", "Name","Type","RamzorColor"};
+        statsTable = new JTable(new StatModel(map.getSettlements()));
+        rs = new TableRowSorter<>(statsTable.getModel());
+        statsTable.setRowSorter(rs);
+        statsTable.getTableHeader().setReorderingAllowed(false);
+        JScrollPane js = new JScrollPane(statsTable);
         TextField FilterText = new TextField("Filter");
         FilterText.addActionListener(new ActionListener()
         {
@@ -49,11 +54,9 @@ public class StatisticsWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) //
             {
-
-                rs.setRowFilter(RowFilter.regexFilter(FilterText.getText(), 0, selectedColumn.getModelIndex()));
-
+                if(!flag)
+                    rs.setRowFilter(RowFilter.regexFilter(FilterText.getText(), 0, selectedColumn.getModelIndex()));
             }
-
         }
         );
 
@@ -100,24 +103,13 @@ public class StatisticsWindow extends JFrame {
                         break;
                     }
                 }
-
             }
         });
 
         up.add(colSelect);
         up.add(FilterText);
         this.add(up, BorderLayout.PAGE_START);
-
-
-
-        statsTable = new JTable(new StatModel(map.getSettlements()));
-        rs = new TableRowSorter<>(statsTable.getModel());
-        statsTable.setRowSorter(rs);
-        statsTable.getTableHeader().setReorderingAllowed(false);
-        JScrollPane js = new JScrollPane(statsTable);
-
         this.add(js);
-
         Panel down = new Panel();
         down.setLayout(new GridLayout(1,3));
         JButton save = new JButton("Save");
@@ -131,27 +123,21 @@ public class StatisticsWindow extends JFrame {
              * @param e
              */
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
+                int selection = statsTable.getSelectedRow();
+                int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
+                String str = (String) statsTable.getModel().getValueAt(modelIndex, 0);
+                int index = map.getSettlement(str);
+                Settlement settlementSelected = map.getSettlements()[index];
 
-                if(flag)
-                {
-                    String str = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
-                    int index = map.getSettlement(str);
-                    Settlement settlementSelected = map.getSettlements()[index];
+                int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
 
-                    int numberOfSick = (int) (settlementSelected.getNumOfHealthy() * 0.1);
-
-                    for (int i = 0; i < numberOfSick; i++) {
-                        Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
-                        settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
-                    }
-                    statsTable.repaint();
-                    mainW.repaint();
-                }else
-                {
-                    JOptionPane.showMessageDialog(new JFrame(), "To add sick person , go back to the original table with the option \"None\".");
+                for (int i = 0; i < numberOfSick; i++) {
+                    Person currentHealthy = settlementSelected.getHealthyPerson().get(0); // take the first person Healthy in the list of HealthyPeople
+                    settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
                 }
+                statsTable.repaint();
+                mainW.repaint();
             }
         });
         down.add(addSick);
@@ -163,20 +149,13 @@ public class StatisticsWindow extends JFrame {
              * @param e
              */
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-               if (flag)
-               {
-                   String set = (String) statsTable.getModel().getValueAt(statsTable.getSelectedRow(), 0);
-                   int index = map.getSettlement(set);
-                   String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
-                   map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
-               }
-               else {
-                   JOptionPane.showMessageDialog(new JFrame(), "To add vaccine doses, go back to the original table with the option \"None\".");
-               }
-
-
+            public void actionPerformed(ActionEvent e) {
+                int selection = statsTable.getSelectedRow();
+                int modelIndex = statsTable.getRowSorter().convertRowIndexToModel(selection);
+                String set = (String) statsTable.getModel().getValueAt(modelIndex, 0);
+                int index = map.getSettlement(set);
+                String number = JOptionPane.showInputDialog("Please enter number of Dose Vaccine to add :");
+                map.getSettlements()[index].setNumberVaccineDose(Integer.parseInt(number));
             }
         });
 
