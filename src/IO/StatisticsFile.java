@@ -32,6 +32,7 @@ public class StatisticsFile
             String delimiter = ",";
             FileWriter pw = new FileWriter(nameOfFile);
             pw.append(header);
+            pw.append(separator);
             for (Settlement settlement : settlements) {
                 pw.append(settlement.getName());
                 pw.append(delimiter);
@@ -49,16 +50,6 @@ public class StatisticsFile
                 pw.append(separator);
             }
             pw.close();
-            /*
-            for (String[] saveDatum : saveData) {
-                StringBuilder row = new StringBuilder();
-                for (String s : saveDatum) {
-                    row.append(s).append(",");
-                }
-                row.append("\n");
-                pw.write(row.toString());
-            }
-            pw.close();*/
         }
         catch (FileNotFoundException e)
         {
