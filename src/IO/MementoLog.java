@@ -1,16 +1,12 @@
 package IO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 public class MementoLog {
-    private Stack<String> stack = new Stack<String>();
+    private String name;
     public MementoLog(String nameOfFile) {
-        this.stack.push(nameOfFile);
+        this.name = nameOfFile;
     }
 
     public String getLastPath(){
-        return this.stack.pop();
+        return this.name;
     }
 }
