@@ -81,11 +81,13 @@ public class MainWindow extends JFrame {
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
             this.removeAll();
+            LineDecorator decorator;
             for (int i = 0; i < myMap.getSettlements().length; i++){
                 Point p1 = myMap.getSettlements()[i].getLocation().getCenter();
                 for (int j = 0; j < myMap.getSettlements()[i].getNeighbours().length; j++){
                     Point p2 = myMap.getSettlements()[i].getNeighbours()[j].getLocation().getCenter();
-                    g.drawLine(p1.getM_x(), p1.getM_y(), p2.getM_x(), p2.getM_y());
+                    decorator = new LineDecorator(myMap.getSettlements()[i], myMap.getSettlements()[i].getNeighbours()[j], p1, p2);
+                    decorator.drawLine(g);
                 }
             }
             for (int i = 0; i < myMap.getSettlements().length; i++){
