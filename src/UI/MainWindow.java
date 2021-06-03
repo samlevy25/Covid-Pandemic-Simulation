@@ -1,5 +1,6 @@
 package UI;
 import Country.Map;
+import IO.MementoLog;
 import IO.SimulationFile;
 import IO.SituationFile;
 import IO.StatisticsFile;
@@ -14,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 public class MainWindow extends JFrame {
 
@@ -25,6 +27,7 @@ public class MainWindow extends JFrame {
     private JButton[] buttons;
     private JLabel[] labels;
     private StatisticsWindow statWindow;
+    private Stack<MementoLog> pathStack = new Stack<MementoLog>();
 
     public MainWindow() {
         super("Main Window");
@@ -51,6 +54,14 @@ public class MainWindow extends JFrame {
     }
     public boolean hasFileLoaded(){
         return fileLoaded;
+    }
+
+    public void pathSave(){
+        pathStack.push(SituationFile.getInstance().save());
+    }
+
+    public void pathUndo(){
+        SituationFile.getInstance().restore(pathStack.pop());
     }
 
     public boolean isClosed(){
@@ -127,8 +138,16 @@ public class MainWindow extends JFrame {
                             JOptionPane.ERROR_MESSAGE);
             }
         });
-        JMenuItem createLogFile = new JMenuItem("Create Log File...");
+        JMenuItem createLogFile = new JMenuItem("Choose Log File...");
         createLogFile.addActionListener(this::logListener);
+        JMenuItem undoPathLog = new JMenuItem("Undo Log path file.");
+        undoPathLog.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!pathStack.empty())
+                    SituationFile.restore(pathStack.pop());
+            }
+        });
         JMenuItem exit = new JMenuItem("Exit");
         exit.addActionListener(new ActionListener() {
             @Override
@@ -141,6 +160,7 @@ public class MainWindow extends JFrame {
         fileMenu.add(statistics);
         fileMenu.add(editMutations);
         fileMenu.add(createLogFile);
+        fileMenu.add(undoPathLog);
         fileMenu.add(exit);
 
         JMenu simulationMenu = new JMenu("Simulation");
@@ -314,16 +334,15 @@ public class MainWindow extends JFrame {
     }
 
     private void logListener(ActionEvent e){
+        if(SituationFile.getInstance() != null){
+            this.pathStack.push(SituationFile.save());
+        }
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             String selectedFile = fileChooser.getSelectedFile().getAbsolutePath();
-            try {
-                SituationFile.initialize(selectedFile);
-            }catch(IOException ioException){
-                ioException.printStackTrace();
-            }
+            SituationFile.initialize(selectedFile);
         }
     }
 }

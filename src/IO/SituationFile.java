@@ -9,21 +9,32 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class SituationFile {
-    private static SituationFile instance;
-    private String nameOfFile;
+    private static SituationFile instance = null;
+    private static String nameOfFile;
     private static Logger logger;
-    private FileHandler fileHandler;
-    private SituationFile(String name) throws IOException {
-        File file = new File(name);
-        if(!file.exists())
-            file.createNewFile();
-        nameOfFile = name;
-        fileHandler = new FileHandler(nameOfFile, true);
-        logger = Logger.getLogger(SituationFile.class.getSimpleName());
-        logger.setUseParentHandlers(false);
-        logger.addHandler(fileHandler);
-        SimpleFormatter simpleFormatter = new SimpleFormatter();
-        fileHandler.setFormatter(simpleFormatter);
+    private static FileHandler fileHandler;
+    private SituationFile(String name) {
+        try {
+            File file = new File(name);
+            if (!file.exists())
+                file.createNewFile();
+            nameOfFile = name;
+            fileHandler = new FileHandler(nameOfFile, true);
+            logger = Logger.getLogger(SituationFile.class.getSimpleName());
+            logger.setUseParentHandlers(false);
+            logger.addHandler(fileHandler);
+            fileHandler.setFormatter(new SimpleFormatter());
+        }catch (IOException e){System.out.println("Log file error.");}
+    }
+
+    public static MementoLog save(){
+        return new MementoLog(nameOfFile);
+    }
+
+
+    public static void restore(MementoLog mementoLog) {
+        if(instance != null)
+            initialize(mementoLog.getLastPath());
     }
 
 
@@ -38,8 +49,18 @@ public class SituationFile {
     }
 
 
-    public static void initialize(String name) throws IOException {
-        if(instance == null)
-            instance = new SituationFile(name);
+    public static void initialize(String name) {
+        try {
+            if (instance == null)
+                instance = new SituationFile(name);
+            else {
+                logger.removeHandler(fileHandler);
+                nameOfFile = name;
+                fileHandler.close();
+                fileHandler = new FileHandler(nameOfFile, true);
+                fileHandler.setFormatter(new SimpleFormatter());
+                logger.addHandler(fileHandler);
+            }
+        }catch (IOException e){System.out.println("Error occurred.");}
     }
 }
