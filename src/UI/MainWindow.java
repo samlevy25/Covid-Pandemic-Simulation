@@ -25,7 +25,7 @@ public class MainWindow extends JFrame {
     private boolean closed = false;
     private JButton[] buttons;
     private JLabel[] labels;
-    private StatisticsWindow statWindow;
+    private StatisticsWindow statWindow = null;
     private final Stack<MementoLog> pathStack = new Stack<>();
 
     public MainWindow() {
@@ -110,10 +110,11 @@ public class MainWindow extends JFrame {
         statistics.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (fileLoaded){
-                statWindow = new StatisticsWindow(myMap, contentPane);
-                statWindow.setVisible(true);
-            }
+                if (fileLoaded) {
+                    if(statWindow == null)
+                        statWindow = new StatisticsWindow(myMap, contentPane);
+                    statWindow.setVisible(true);
+                }
                 else {
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Statistics Error",
                             JOptionPane.ERROR_MESSAGE);
@@ -303,7 +304,8 @@ public class MainWindow extends JFrame {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        statWindow = new StatisticsWindow(myMap, contentPane);
+                        if(statWindow == null)
+                            statWindow = new StatisticsWindow(myMap, contentPane);
                         statWindow.getStatsTable().setRowSelectionInterval(finalI, finalI);
                         statWindow.setVisible(true);
                     }
