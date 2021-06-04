@@ -1,7 +1,7 @@
 package IO;
 
 public class MementoLog {
-    private String name;
+    private final String name;
     public MementoLog(String nameOfFile) {
         this.name = nameOfFile;
     }

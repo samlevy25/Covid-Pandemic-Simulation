@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -23,14 +23,14 @@ public abstract class Settlement
 {
     private final String name; // Settlement's name
     private final Location location;// Settlement's location
-    private List<Person> people; // People's list of the settlement
+    private final List<Person> people; // People's list of the settlement
     private RamzorColor ramzorColor; // Settlement's ramzor color
     private double mekadem; // Settlement's mekadem
-    private double max_person; // Max person's capacity in the settlement.
+    private final double max_person; // Max person's capacity in the settlement.
     private int numberVaccineDose ; // Settlement's number vaccine dose
     private Settlement[] settlementConnected; // array of settlement connected between them
-    private List<Sick> sickPerson; // List of sick people in the settlement
-    private List<Person> healthyPerson; // List of healthy people in the settlement
+    private final List<Sick> sickPerson; // List of sick people in the settlement
+    private final List<Person> healthyPerson; // List of healthy people in the settlement
     private int numOfDead; //  number of dead in the settlement
     private int newNumOfDead = 0;
     private final IVirus[] virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()}; // Array of all virus variants.
@@ -187,7 +187,7 @@ public abstract class Settlement
      */
     public void addNeighbours(Settlement newNeighbours)
     {
-        ArrayList<Settlement> updateArray = new ArrayList<Settlement>(Arrays.asList(this.settlementConnected));
+        ArrayList<Settlement> updateArray = new ArrayList<>(Arrays.asList(this.settlementConnected));
         updateArray.add(newNeighbours);
         this.settlementConnected = updateArray.toArray(this.settlementConnected);
     }
@@ -199,9 +199,6 @@ public abstract class Settlement
                 ", ramzorColor=" + ramzorColor +
                 ", mekadem=" + mekadem +
                 '}';
-    }
-    public boolean equals(Settlement other) {
-        return this.name.equals(other.name);
     }
 
     /**
@@ -277,10 +274,6 @@ public abstract class Settlement
      */
     public void setNumberVaccineDose(int numberVaccineDose) {
         this.numberVaccineDose += numberVaccineDose;
-    }
-
-    public void setRamzorColor() {
-        this.ramzorColor = ramzorColor;
     }
 
     /**

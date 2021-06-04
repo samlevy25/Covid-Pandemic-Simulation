@@ -17,10 +17,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class StatisticsWindow extends JFrame {
-    private Map my_map; // the Map
-    private JTable statsTable ; // Table of my_data
+    private final Map my_map; // the Map
+    private final JTable statsTable ; // Table of my_data
     private String selectedComboBox;
-    private TableRowSorter<TableModel> rs;
+    private final TableRowSorter<TableModel> rs;
     private TableColumn selectedColumn = null ;
     private boolean flag = true;
 
@@ -32,7 +32,6 @@ public class StatisticsWindow extends JFrame {
      */
     StatisticsWindow(Map map, JPanel mainWin) {
         super("Statistics");
-        JPanel mainW = mainWin;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         my_map = map;
         this.setLayout(new BorderLayout());
@@ -49,7 +48,6 @@ public class StatisticsWindow extends JFrame {
         {
             /**
              * Filter of the data in the table
-             * @param e
              */
             @Override
             public void actionPerformed(ActionEvent e) //
@@ -65,7 +63,6 @@ public class StatisticsWindow extends JFrame {
         {
             /**
              * Give the index the element selectionned in the combo box .
-             * @param e
              */
             @Override
             public void actionPerformed(ActionEvent e)
@@ -120,7 +117,6 @@ public class StatisticsWindow extends JFrame {
         {
             /**
              * Add sick in a settlement with a random virus
-             * @param e
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -138,7 +134,7 @@ public class StatisticsWindow extends JFrame {
                         settlementSelected.isSick(currentHealthy, Main.randomVirus(map));
                     }
                     statsTable.repaint();
-                    mainW.repaint();
+                    mainWin.repaint();
                 }
                 else{
                     JOptionPane.showMessageDialog(new JFrame(), "Select a row!", "Statistics Error",
@@ -152,7 +148,6 @@ public class StatisticsWindow extends JFrame {
         {
             /**
              * Give number of dose of vaccine to a settlement
-             * @param e
              */
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -178,7 +173,6 @@ public class StatisticsWindow extends JFrame {
 
     /**
      * Save all the data modified bu add sick , vaccinate or simulation in CVS file
-     * @param actionEvent
      */
     private void saveCSV(ActionEvent actionEvent) {
         JFileChooser fileChooser = new JFileChooser();

@@ -1,6 +1,5 @@
 package Virus;
 
-import Country.Map;
 import Country.Settlement;
 import Population.Person;
 import Population.Sick;
@@ -13,7 +12,7 @@ public class SouthAfricanVariant implements IVirus {
     private static final double killAbove18 = 0.08; // Probability of dying from the virus for someone above 18
     private static final double contagionUnder18 = 0.6; // Probability of being sick with the virus for a person under the age of 18
     private static final double contagionAbove18 = 0.5; //Probability of being sick with the virus for a person above the age of 18
-    private boolean[] mutations = {true, true, true};
+    private final boolean[] mutations = {true, true, true};
 
     /**
      * Give the probability of the person by his age

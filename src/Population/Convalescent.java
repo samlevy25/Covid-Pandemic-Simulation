@@ -1,5 +1,5 @@
-/**
- *  @creator : Jacob Elbaz , ID : 336068895
+/*
+   @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
 package Population;
@@ -25,7 +25,6 @@ public class Convalescent extends Person {
 
     /**
      * Probability to be sick
-     * @return
      */
     @Override
     public double contagionProbability() {

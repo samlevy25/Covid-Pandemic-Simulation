@@ -5,14 +5,13 @@ import Virus.IVirus;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.awt.*;
+import java.util.Objects;
 
 public class EditMutationWindow extends JDialog {
 
-    private String[] elements = {"British Variant", "Chinese Variant", "South Africa Variant"};
-
-    private class VariantModel extends AbstractTableModel
+    private static class VariantModel extends AbstractTableModel
     {
-        private IVirus[] virus;
+        private final IVirus[] virus;
         private final String[] columnNames = {"British Variant", "Chinese Variant", "South Africa Variant"};
         public VariantModel(IVirus[] data) {
             this.virus = data;
@@ -47,7 +46,7 @@ public class EditMutationWindow extends JDialog {
 
         @Override
         public Class<?> getColumnClass(int columnIndex) {
-            return getValueAt(0, columnIndex).getClass();
+            return Objects.requireNonNull(getValueAt(0, columnIndex)).getClass();
         }
 
         @Override
@@ -79,10 +78,11 @@ public class EditMutationWindow extends JDialog {
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
+        String[] elements = {"British Variant", "Chinese Variant", "South Africa Variant"};
         this.add(new RowedTableScroll(table, elements));
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        };
-    }
+        }
+}
 

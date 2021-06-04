@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -16,7 +16,7 @@ public class SimulationFile {
 
     private final String nameOfFile; // file's name
     private Map map;
-    private SettlementFactory settlementFactory = new SettlementFactory();
+    private final SettlementFactory settlementFactory = new SettlementFactory();
     /**
      * Constructor
      * @param n :  file"s name

@@ -3,7 +3,6 @@ import Country.Map;
 import IO.MementoLog;
 import IO.SimulationFile;
 import IO.SituationFile;
-import IO.StatisticsFile;
 import Location.Point;
 import Simulation.Clock;
 
@@ -27,7 +26,7 @@ public class MainWindow extends JFrame {
     private JButton[] buttons;
     private JLabel[] labels;
     private StatisticsWindow statWindow;
-    private Stack<MementoLog> pathStack = new Stack<MementoLog>();
+    private final Stack<MementoLog> pathStack = new Stack<>();
 
     public MainWindow() {
         super("Main Window");
@@ -54,14 +53,6 @@ public class MainWindow extends JFrame {
     }
     public boolean hasFileLoaded(){
         return fileLoaded;
-    }
-
-    public void pathSave(){
-        pathStack.push(SituationFile.getInstance().save());
-    }
-
-    public void pathUndo(){
-        SituationFile.getInstance().restore(pathStack.pop());
     }
 
     public boolean isClosed(){
@@ -134,7 +125,7 @@ public class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(fileLoaded){
-                    EditMutationWindow editWindow = new EditMutationWindow(myMap.getVirus());}
+                    new EditMutationWindow(myMap.getVirus());}
                 else
                     JOptionPane.showMessageDialog(new JFrame(), "You have to load a file !", "Statistics Error",
                             JOptionPane.ERROR_MESSAGE);

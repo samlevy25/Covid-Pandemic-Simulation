@@ -19,16 +19,17 @@ public class RowedTableScroll extends JScrollPane {
         @Override
         public Component getListCellRendererComponent(JList<? extends String> list,
                                                       String value, int index, boolean isSelected, boolean cellHasFocus) {
-            setText((value == null) ? "" : value.toString());
+            setText((value == null) ? "" : value);
             return this;
         }
     }
     public RowedTableScroll(final JTable table, final String[] rowHeaders) {
         super(table);
-        final JList<String> rowHeader = new JList<String>(new AbstractListModel<String>() {
+        final JList<String> rowHeader = new JList<>(new AbstractListModel<String>() {
             public int getSize() {
                 return Math.min(rowHeaders.length, table.getRowCount());
             }
+
             public String getElementAt(int index) {
                 return rowHeaders[index];
             }

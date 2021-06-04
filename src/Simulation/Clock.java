@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -26,7 +26,6 @@ public class Clock {
 
     /**
      * Increases the current time in the simulation by one and give to the thread the order to sleep
-     * @throws InterruptedException
      */
     public static void nextTick() throws InterruptedException {
         now++;

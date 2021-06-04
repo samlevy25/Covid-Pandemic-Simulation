@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -34,8 +34,5 @@ public class Size {
         return "(" + width +
                 "x" + height +
                 ')';
-    }
-    public boolean equals(Size other_s){
-        return this.width == other_s.getWidth() && this.height == other_s.getHeight();
     }
 }

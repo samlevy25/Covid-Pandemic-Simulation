@@ -6,10 +6,10 @@ import Location.Point;
 import java.awt.*;
 
 public class LineDecorator {
-    private Color colorA;
-    private Color colorB;
-    private Point p1;
-    private Point p2;
+    private final Color colorA;
+    private final Color colorB;
+    private final Point p1;
+    private final Point p2;
     public LineDecorator(Settlement a, Settlement b, Point pA, Point pB){
         colorA = a.getRamzorColor().color;
         colorB = b.getRamzorColor().color;

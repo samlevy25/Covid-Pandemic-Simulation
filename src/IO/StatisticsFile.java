@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -10,7 +10,7 @@ import java.io.*;
 
 public class StatisticsFile
 {
-    private String nameOfFile; // name of the file
+    private final String nameOfFile; // name of the file
 
     /**
      * Constructor
@@ -23,7 +23,6 @@ public class StatisticsFile
     /**
      * write in the file cvs that save data of the map after modification( simulation, add sick , vaccinate etc.)
      * @param settlements : Array of settlements
-     * @throws IOException
      */
     public void writeInCvs(Settlement[] settlements) throws IOException {
         try {

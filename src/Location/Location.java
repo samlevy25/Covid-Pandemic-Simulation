@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -36,13 +36,6 @@ public class Location {
                  size.toString() +
                 ']';
     }
-
-    /**
-     * check if both settlements are same
-     * @param other_l : Another settlement to check
-     * @return True if both settlements are same otherwise False
-     */
-    public boolean equals(Location other_l){ return this.position == other_l.getPosition() && this.size == other_l.getSize(); }
 
     public Point getCenter() {
         int x = size.getWidth()/2 + position.getM_x();

@@ -1,4 +1,4 @@
-/**
+/*
  *  @creator : Jacob Elbaz , ID : 336068895
  *  @creator : Samuel Elie Levy  , ID : 345112148
  */
@@ -23,9 +23,8 @@ public class Map {
     private final IVirus[] virus; // Array of all virus variants.
     private final int size;
     private boolean state = false;
-    private ExecutorService executor;
-    private List<SimulationThread> threads;
-    private CyclicBarrier barrier;
+    private final ExecutorService executor;
+    private final List<SimulationThread> threads;
 
     /**
      * Constructor
@@ -35,15 +34,13 @@ public class Map {
     public Map(Settlement[] s) {
         size = s.length;
         settlements = new Settlement[size];
-        for (int i = 0; i < size; i++) {
-            settlements[i] = s[i];
-        }
+        System.arraycopy(s, 0, settlements, 0, size);
         virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()};
         executor = Executors.newFixedThreadPool(size);
-        barrier = new CyclicBarrier(size);
-        threads = new ArrayList<SimulationThread>();
+        CyclicBarrier barrier = new CyclicBarrier(size);
+        threads = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            threads.add(new SimulationThread(settlements[i], this.barrier));
+            threads.add(new SimulationThread(settlements[i], barrier));
         }
     }
 
