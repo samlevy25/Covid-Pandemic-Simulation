@@ -51,7 +51,7 @@ public class EditMutationWindow extends JDialog {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return true;
+            return rowIndex != columnIndex;
         }
 
         @Override
