@@ -17,13 +17,12 @@ import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 public class Map implements Iterable<Settlement>
 {
 
     private final Settlement[] settlements;
-    private final IVirus[] virus; // Array of all virus variants.
+    public static IVirus[] virus; // Array of all virus variants.
     private final int size;
     private boolean state = false;
     private final ExecutorService executor;

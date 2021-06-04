@@ -1,15 +1,12 @@
 package Virus;
 
-import Country.Settlement;
 import Population.Person;
-import java.util.Random;
 
 public class BritishVariant extends Variant {
 
     private static final double killUnder18 = 0.01; // Probability of dying from the virus for someone under 18
     private static final double killAbove18 = 0.1; // Probability of dying from the virus for someone above 18
     private static final double contagion = 0.7; // Probability of being sick with the virus
-    private final boolean[] mutations = {true, true, true};
 
     /**
      * Give the probability of the person by his age
@@ -34,38 +31,5 @@ public class BritishVariant extends Variant {
     @Override
     public String toString() {
         return "British Variant";
-    }
-
-    /**
-     * @return The mutation
-     */
-    @Override
-    public boolean[] getMutations() {
-        return mutations;
-    }
-
-    /**
-     * Change the mutation
-     * @param i : index
-     * @param b : True or False
-     */
-    @Override
-    public void setMutations(int i, boolean b) {
-        if(i != 0)
-            this.mutations[i] = b;
-    }
-
-    /**
-     * Return a variant of the virus
-     * @param map : The map
-     * @return : Variant virus
-     */
-    @Override
-    public IVirus getRandomVariant(Settlement map) {
-        int i;
-        do {
-            i = new Random().nextInt(3);
-        } while (!mutations[i]);
-        return map.getVirus()[i];
     }
 }

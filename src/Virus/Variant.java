@@ -1,6 +1,5 @@
 package Virus;
 
-import Country.Settlement;
 import Population.Person;
 import Population.Sick;
 import Simulation.Clock;
@@ -11,9 +10,7 @@ public abstract class Variant implements IVirus{
     abstract double killingProbability(Person p);
 
     @Override
-    public double contagionProbability(Person p) {
-        return 0;
-    }
+    public abstract double contagionProbability(Person p);
 
     @Override
     public boolean tryToContagion(Sick p, Person other) {
@@ -35,20 +32,5 @@ public abstract class Variant implements IVirus{
         double probability = Math.max(0, killingProbability(p) - 0.01*killingProbability(p)*Math.pow(t-15, 2));
         int i = new Random().nextInt(100);
         return i < probability * 100;
-    }
-
-    @Override
-    public boolean[] getMutations() {
-        return new boolean[0];
-    }
-
-    @Override
-    public void setMutations(int i, boolean b) {
-
-    }
-
-    @Override
-    public IVirus getRandomVariant(Settlement settlement) {
-        return null;
     }
 }

@@ -9,10 +9,7 @@ import Location.Location;
 import Location.Point;
 import Population.*;
 import Simulation.Clock;
-import Virus.BritishVariant;
-import Virus.ChineseVariant;
-import Virus.IVirus;
-import Virus.SouthAfricanVariant;
+import Virus.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +30,6 @@ public abstract class Settlement
     private final List<Person> healthyPerson; // List of healthy people in the settlement
     private int numOfDead; //  number of dead in the settlement
     private int newNumOfDead = 0;
-    private final IVirus[] virus = new IVirus[]{new BritishVariant(), new ChineseVariant(), new SouthAfricanVariant()}; // Array of all virus variants.
 
     /**
      * Constructor
@@ -119,9 +115,6 @@ public abstract class Settlement
         }
     }
 
-    public IVirus[] getVirus() {
-        return virus;
-    }
     /**
      * Remove the dead person from the settlement list and also from the sick list and increase the death count by 1.
      * @param sick : Dead person
@@ -139,13 +132,14 @@ public abstract class Settlement
      * @param person : The person who becomes sick.
      * @param v :  Person's virus
      */
-    public void isSick(Person person, IVirus v)
-    {
-        healthyPerson.remove(person);
-        people.remove(person);
-        Sick newSick = (Sick) person.contagion(v);
-        sickPerson.add(newSick);
-        people.add(newSick);
+    public void isSick(Person person, IVirus v) {
+        if (v != null) {
+            healthyPerson.remove(person);
+            people.remove(person);
+            Sick newSick = (Sick) person.contagion(v);
+            sickPerson.add(newSick);
+            people.add(newSick);
+        }
     }
 
     /**
@@ -326,7 +320,7 @@ public abstract class Settlement
                 k++;
                 virus = getSickPerson().get(j).getVirus();
                 if (virus.tryToContagion(getSickPerson().get(j), getHealthyPerson().get(rand))) {
-                    isSick(getHealthyPerson().get(rand), virus.getRandomVariant(this));
+                    isSick(getHealthyPerson().get(rand), VirusStrategy.getVariant(virus));
                 }
             }
         }

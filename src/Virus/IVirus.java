@@ -1,6 +1,5 @@
 package Virus;
 
-import Country.Settlement;
 import Population.Person;
 import Population.Sick;
 
@@ -28,23 +27,4 @@ public interface IVirus {
      */
     boolean tryToKill(Sick p);
 
-    /**
-     * @return The virus's mutation
-     */
-    boolean[] getMutations();
-
-    /**
-     * Change the mutation
-     * @param i : index
-     * @param b : True or False
-     */
-    void setMutations(int i, boolean b);
-
-
-    /**
-     * Return a variant of the virus
-     * @param settlement : The settlement
-     * @return : Variant virus
-     */
-    IVirus getRandomVariant(Settlement settlement);
 }

@@ -7,15 +7,17 @@ import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.util.Objects;
 
+import static Virus.VirusStrategy.variantsTab;
+
 public class EditMutationWindow extends JDialog {
 
     private static class VariantModel extends AbstractTableModel
     {
         private final IVirus[] virus;
         private final String[] columnNames = {"British Variant", "Chinese Variant", "South Africa Variant"};
-        public VariantModel(IVirus[] data) {
-            this.virus = data;
-        }
+        public VariantModel(IVirus[] virusArray) {
+            this.virus = virusArray;
+        } // Ctor
 
 
         @Override
@@ -30,13 +32,7 @@ public class EditMutationWindow extends JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            IVirus ivirus = virus[rowIndex];
-            switch(columnIndex){
-                case 0: return ivirus.getMutations()[0];
-                case 1: return ivirus.getMutations()[1];
-                case 2: return ivirus.getMutations()[2];
-            }
-            return null;
+            return variantsTab[rowIndex][columnIndex];
         }
 
         @Override
@@ -51,20 +47,12 @@ public class EditMutationWindow extends JDialog {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return rowIndex != columnIndex;
+            return true;
         }
 
         @Override
         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-            IVirus ivirus = virus[rowIndex];
-            switch(columnIndex){
-                case 0: ivirus.setMutations(0, (Boolean) aValue);
-                break;
-                case 1: ivirus.setMutations(1, (Boolean) aValue);
-                break;
-                case 2: ivirus.setMutations(2, (Boolean) aValue);
-                break;
-            }
+            variantsTab[rowIndex][columnIndex] = (boolean) aValue;
             fireTableCellUpdated(rowIndex, columnIndex);
         }
     }
