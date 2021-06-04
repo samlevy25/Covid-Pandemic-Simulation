@@ -1,5 +1,6 @@
 package UI;
 import Country.Map;
+import Country.Settlement;
 import IO.MementoLog;
 import IO.SimulationFile;
 import IO.SituationFile;
@@ -73,20 +74,21 @@ public class MainWindow extends JFrame {
             super.paintComponents(g);
             this.removeAll();
             LineDecorator decorator;
-            for (int i = 0; i < myMap.getSettlements().length; i++){
-                Point p1 = myMap.getSettlements()[i].getLocation().getCenter();
-                for (int j = 0; j < myMap.getSettlements()[i].getNeighbours().length; j++){
-                    Point p2 = myMap.getSettlements()[i].getNeighbours()[j].getLocation().getCenter();
-                    decorator = new LineDecorator(myMap.getSettlements()[i], myMap.getSettlements()[i].getNeighbours()[j], p1, p2);
+            for (Settlement settlement : myMap){
+                Point p1 = settlement.getLocation().getCenter();
+                for (int j = 0; j < settlement.getNeighbours().length; j++){
+                    Point p2 = settlement.getNeighbours()[j].getLocation().getCenter();
+                    decorator = new LineDecorator(settlement, settlement.getNeighbours()[j], p1, p2);
                     decorator.drawLine(g);
                 }
             }
-            for (int i = 0; i < myMap.getSettlements().length; i++){
-                int x = myMap.getSettlements()[i].getLocation().getPosition().getM_x();
-                int y = myMap.getSettlements()[i].getLocation().getPosition().getM_y();
-                int width = myMap.getSettlements()[i].getLocation().getSize().getWidth();
-                int height = myMap.getSettlements()[i].getLocation().getSize().getHeight();
-                Color color = myMap.getSettlements()[i].getRamzorColor().color;
+            for (Settlement settlement : myMap)
+            {
+                int x = settlement.getLocation().getPosition().getM_x();
+                int y = settlement.getLocation().getPosition().getM_y();
+                int width = settlement.getLocation().getSize().getWidth();
+                int height = settlement.getLocation().getSize().getHeight();
+                Color color = settlement.getRamzorColor().color;
                 g.setColor(color);
                 g.fillRect(x, y, width, height);
                 g.setColor(Color.BLACK);

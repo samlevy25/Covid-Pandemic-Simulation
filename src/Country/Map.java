@@ -12,12 +12,15 @@ import Virus.SouthAfricanVariant;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
-public class Map {
+public class Map implements Iterable<Settlement>
+{
 
     private final Settlement[] settlements;
     private final IVirus[] virus; // Array of all virus variants.
@@ -104,5 +107,16 @@ public class Map {
         for (SimulationThread simulationThread : threads) {
             executor.submit(simulationThread);
         }
+    }
+
+
+    /**
+     * Returns an iterator over elements of type {@code T}.
+     *
+     * @return an Iterator.
+     */
+    @Override
+    public Iterator<Settlement> iterator() {
+        return Arrays.asList(settlements).iterator();
     }
 }
